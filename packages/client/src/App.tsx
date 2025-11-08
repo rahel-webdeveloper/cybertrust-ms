@@ -1,12 +1,20 @@
 import { Outlet } from 'react-router';
+import Sidebar from './Sidebar';
+import { Button, Icon } from '@chakra-ui/react';
+import { HiHeart } from 'react-icons/hi';
 
 function App() {
   return (
-    <div className="h-screen flex items-center flex-col justify-center gap-7">
-      <h1 className="text-2xl text-center mx-10">
-        Welcome to <span className="font-bold">Cyber Trust MS</span> Web App
-      </h1>
-      <Outlet />
+    <div>
+      <Sidebar />
+      <div>
+        <Button size="xs">Click me</Button>
+        <Icon>
+          <HiHeart />
+        </Icon>
+
+        <Outlet />
+      </div>
     </div>
   );
 }

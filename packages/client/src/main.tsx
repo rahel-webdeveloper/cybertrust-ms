@@ -3,9 +3,12 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import router from './routes.tsx';
 import { RouterProvider } from 'react-router-dom';
+import { Provider } from './components/ui/provider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider defaultTheme="dark">
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );
