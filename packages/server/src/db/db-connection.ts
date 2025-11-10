@@ -8,7 +8,7 @@ const connectDb = async () => {
       dbName: 'cybertrust-db',
     });
 
-    console.log('Connected Database successfully.');
+    console.log('Database Connected successfully.');
   } catch (error) {
     console.log('Faild to connect db!');
   }
