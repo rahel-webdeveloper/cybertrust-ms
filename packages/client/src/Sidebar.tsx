@@ -1,9 +1,7 @@
+import DrawerShell from './components/DrawerShell';
+
 const Sidebar = () => {
-  return (
-    <div className="drawer">
-      <p>Sidebar</p>
-    </div>
-  );
+  return <DrawerShell />;
 };
 
 export default Sidebar;

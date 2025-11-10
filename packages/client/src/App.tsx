@@ -1,21 +1,17 @@
-import { Outlet } from 'react-router';
+// In App.jsx
+
+import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { Button, Icon } from '@chakra-ui/react';
-import { HiHeart } from 'react-icons/hi';
+import { Box, Flex } from '@chakra-ui/react';
 
 function App() {
   return (
-    <div>
+    <Flex direction="column">
       <Sidebar />
-      <div>
-        <Button size="xs">Click me</Button>
-        <Icon>
-          <HiHeart />
-        </Icon>
-
+      <Box flex="1" p={4} border={'red'}>
         <Outlet />
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 }
 

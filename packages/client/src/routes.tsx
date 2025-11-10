@@ -1,7 +1,16 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import App from './App';
+import { Text } from '@chakra-ui/react';
 
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <Text fontSize="4xl" textAlign="center" pt="10">
+        Landing Page
+      </Text>
+    ),
+  },
   {
     path: 'auth',
     element: (
@@ -35,9 +44,25 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: (
-          <div className="text-center">
+          <Text fontSize="2xl" textAlign="center" pt="10">
             This is the dashboard for diffrent roles.
-          </div>
+          </Text>
+        ),
+      },
+      {
+        path: 'users',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            Users Page for Admin
+          </Text>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            App Settings
+          </Text>
         ),
       },
     ],
