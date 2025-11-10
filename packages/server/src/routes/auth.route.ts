@@ -6,7 +6,7 @@ authRouter.post('/login', (req: Request, res: Response) => {
   res.send({ message: 'User loged' });
 });
 
-authRouter.post('/signup', (req: Request, res: Response) => {
+authRouter.post('/sign-up', (req: Request, res: Response) => {
   res.send({ message: 'Account crated successfully' });
 });
 

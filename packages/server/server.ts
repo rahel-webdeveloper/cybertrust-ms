@@ -10,11 +10,11 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
+app.use('/api/auth', authRouter);
+
 app.get('/', (req: Request, res: Response) => {
   res.json('Hello via Cyber Trust MS app server');
 });
-
-app.use('/api/auth', authRouter);
 
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
