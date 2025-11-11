@@ -6,5 +6,6 @@ declare module 'bun' {
     JWT_EXPIRES_IN: number;
     ADMIN_EMAIL: string;
     ADMIN_PW: string;
+    CLIENT_URL: string;
   }
 }

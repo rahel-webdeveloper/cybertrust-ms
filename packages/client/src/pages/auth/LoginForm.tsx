@@ -14,7 +14,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import reactImg from '@/assets/react.svg';
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
+import API from '@/api/axios-Instance';
+import { useAuth, type User } from '@/context/AuthContext';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email'),
@@ -22,6 +24,11 @@ const loginSchema = z.object({
 });
 
 type LoginData = z.infer<typeof loginSchema>;
+
+type ResponseLoginType = {
+  token: string;
+  user: User;
+};
 
 const LoginForm = () => {
   const {
@@ -31,11 +38,19 @@ const LoginForm = () => {
   } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   });
+  const { loginSuccess } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: LoginData) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log(data);
-    // reset();
+    const {
+      data: { token, user },
+    } = await API.post<ResponseLoginType>('api/auth/login', data);
+
+    loginSuccess(token);
+    navigate('/app');
+
+    console.log(user);
   };
 
   return (

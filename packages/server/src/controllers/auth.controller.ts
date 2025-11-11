@@ -55,6 +55,10 @@ export const authController = {
     }
   },
 
+  async getUser(req: AuthRequest, res: Response) {
+    res.status(200).json(req.user);
+  },
+
   async deleteAccount(req: AuthRequest, res: Response) {
     const { id: targetUserId } = req.params;
 

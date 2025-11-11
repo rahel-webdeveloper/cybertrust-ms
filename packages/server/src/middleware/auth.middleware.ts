@@ -6,6 +6,8 @@ export interface AuthRequest extends Request {
   user?: {
     id?: string;
     role?: string;
+    name?: string;
+    email?: string;
   };
 }
 
@@ -34,6 +36,8 @@ export const protect = (allowedRoles?: string[]) => {
       req.user = {
         id: user?.id,
         role: user?.role,
+        name: user?.name,
+        email: user?.email,
       };
 
       if (allowedRoles && !allowedRoles.includes(user!.role)) {

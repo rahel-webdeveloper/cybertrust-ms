@@ -14,6 +14,8 @@ authRouter.delete(
   authController.deleteAccount
 );
 
+authRouter.get('/me', protect(), authController.getUser);
+
 authRouter.post('/logout', (req: Request, res: Response) => {
   res.send({ message: 'User logout' });
 });
