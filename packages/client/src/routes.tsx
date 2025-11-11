@@ -1,6 +1,8 @@
-import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from './App';
 import { Text } from '@chakra-ui/react';
+import SignUp from './pages/auth/SignUp';
+import AuthLayout from './pages/auth/AuthLayout';
 
 const router = createBrowserRouter([
   {
@@ -13,11 +15,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'auth',
-    element: (
-      <div>
-        Auth pages <Outlet />
-      </div>
-    ),
+    element: <AuthLayout />,
     children: [
       {
         index: true,
@@ -29,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'signup',
-        element: <div>Signup Page</div>,
+        element: <SignUp />,
       },
     ],
   },
