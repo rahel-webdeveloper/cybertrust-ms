@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  Box,
   Button,
   Field,
   FieldErrorText,
@@ -16,19 +17,25 @@ import {
 import reactImg from '@/assets/react.svg';
 import { Form } from 'react-router-dom';
 
-const signupSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, 'Name must be at least 2 characters')
-    .max(20, 'Name is too long.'),
-  email: z.string().email('Invalid email'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
+const signupSchema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(2, 'Name must be at least 2 characters')
+      .max(20, 'Name is too long.'),
+    email: z.string().email('Invalid email'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 type SignupData = z.infer<typeof signupSchema>;
 
-const SignUp = () => {
+const SignupForm = () => {
   const {
     register,
     handleSubmit,
@@ -58,7 +65,7 @@ const SignUp = () => {
       <Stack p={4} gap={2}>
         <Fieldset.Legend fontSize="1.3rem" textAlign="center">
           <Image src={reactImg} w="3rem" mx="auto" mb="8" />
-          Sign up to{' '}
+          Create Acount in{' '}
           <Text as="span" color="lightskyblue">
             Cybertrust
           </Text>
@@ -69,12 +76,12 @@ const SignUp = () => {
           fontWeight="400"
           mt="3"
         >
-          This is a private Internal Management Systeme for Cyber Trust It
-          Services, If you do not know why you login, please do not create
-          account.
+          This is a private Internal Management System for Cyber Trust IT
+          Services. Access is restricted to authorized personnel only. If you
+          are not an authorized user, please do not log in or create an account.
         </Fieldset.HelperText>
 
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack p={4} gap={6}>
             <Field.Root
               id="name"
@@ -108,23 +115,45 @@ const SignUp = () => {
               <FieldErrorText>{errors.email?.message}</FieldErrorText>
             </Field.Root>
 
-            <Field.Root
-              id="password"
-              invalid={Boolean(errors.password)}
-              disabled={isSubmitting}
-            >
-              <Field.Label>Password</Field.Label>
+            <Box display="flex" columns="2" columnGap="4">
+              <Field.Root
+                id="password"
+                invalid={Boolean(errors.password)}
+                disabled={isSubmitting}
+              >
+                <Field.Label>Password</Field.Label>
 
-              <Input
-                {...register('password')}
-                rounded="full"
-                size="lg"
-                py="5"
-                type="password"
-                placeholder="***********"
-              />
-              <FieldErrorText>{errors.password?.message}</FieldErrorText>
-            </Field.Root>
+                <Input
+                  {...register('password')}
+                  rounded="full"
+                  size="lg"
+                  py="5"
+                  type="password"
+                  placeholder="***********"
+                />
+                <FieldErrorText>{errors.password?.message}</FieldErrorText>
+              </Field.Root>
+
+              <Field.Root
+                id="confirmPassword"
+                invalid={Boolean(errors.confirmPassword)}
+                disabled={isSubmitting}
+              >
+                <Field.Label>Confirm Password</Field.Label>
+
+                <Input
+                  {...register('confirmPassword')}
+                  rounded="full"
+                  size="lg"
+                  py="5"
+                  type="password"
+                  placeholder="***********"
+                />
+                <FieldErrorText>
+                  {errors.confirmPassword?.message}
+                </FieldErrorText>
+              </Field.Root>
+            </Box>
 
             <Button
               type="submit"
@@ -155,4 +184,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignupForm;

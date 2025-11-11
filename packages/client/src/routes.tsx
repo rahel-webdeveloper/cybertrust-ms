@@ -1,8 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from './App';
 import { Text } from '@chakra-ui/react';
-import SignUp from './pages/auth/SignUp';
+import SignupForm from './pages/auth/SignupForm';
 import AuthLayout from './pages/auth/AuthLayout';
+import LoginForm from './pages/auth/LoginForm';
 
 const router = createBrowserRouter([
   {
@@ -23,11 +24,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
-        element: <div>Login Page</div>,
+        element: <LoginForm />,
       },
       {
         path: 'signup',
-        element: <SignUp />,
+        element: <SignupForm />,
       },
     ],
   },
