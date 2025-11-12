@@ -1,12 +1,11 @@
-import { navData } from '../data/cosnt-data';
-import { Button, CloseButton, Drawer, Portal, Stack } from '@chakra-ui/react';
-import { useRef, useState } from 'react';
+import { sidebarNav, sidebarNavBottom } from '../data/cosnt-data';
+import { CloseButton, Drawer, Grid, Portal, Stack } from '@chakra-ui/react';
+import { useRef } from 'react';
 import NavItem from './NavItem';
 import { Link } from 'react-router-dom';
 import { Columns2 } from 'lucide-react';
 
 const DrawerShell = () => {
-  const [activeItem, setActiveItem] = useState('home');
   const ref = useRef<HTMLInputElement | null>(null);
 
   return (
@@ -27,34 +26,36 @@ const DrawerShell = () => {
         <Drawer.Positioner>
           <Drawer.Content>
             <Drawer.Header>
-              <Drawer.Title>CyberTrust</Drawer.Title>
+              <Drawer.Title>CybeTrust</Drawer.Title>
             </Drawer.Header>
 
             <Drawer.Body>
               {/* Replaced generic p/Input with standard NavItems */}
-              <Stack ml={2} gap={2} mt="0">
-                {navData.map((item, idx) => (
-                  <Link to={item.path} key={idx}>
-                    <NavItem
-                      key={item.name}
-                      icon={item.icon}
-                      href={item.path}
-                      isActive={activeItem === item.name}
-                      onClick={() => setActiveItem(item.name)}
-                    >
-                      {item.name}
-                    </NavItem>
-                  </Link>
+              <Stack as="ul" ml={4} gap={2} mt="0">
+                {sidebarNav.map((item) => (
+                  <NavItem
+                    key={item.name}
+                    icon={item.icon}
+                    item={item.name}
+                    path={item.path}
+                  />
                 ))}
               </Stack>
             </Drawer.Body>
 
-            <Drawer.Footer>
-              {/* Standard footer buttons */}
-              <Button variant="outline" mr={3}>
-                Cancel
-              </Button>
-              <Button>Save</Button>
+            <Drawer.Footer justifyContent="normal">
+              <Grid rowGap="2">
+                {sidebarNavBottom.map((item, idx) => (
+                  <Link to={item.path} key={idx}>
+                    <NavItem
+                      key={item.name}
+                      path={item.path}
+                      icon={item.icon}
+                      item={item.name}
+                    />
+                  </Link>
+                ))}
+              </Grid>
             </Drawer.Footer>
             <Drawer.CloseTrigger asChild>
               <CloseButton size="sm" />

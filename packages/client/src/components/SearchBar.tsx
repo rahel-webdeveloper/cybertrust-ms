@@ -12,7 +12,7 @@ const SearchLabel = () => {
       }
       mx="3"
     >
-      <Input placeholder="Search contacts" rounded="xl" />
+      <Input placeholder="Search contacts" rounded="2xl" />
     </InputGroup>
   );
 };

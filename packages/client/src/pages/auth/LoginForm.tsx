@@ -1,6 +1,6 @@
 import API from '@/api/axios-Instance';
 import reactImg from '@/assets/react.svg';
-import Link from '@/components/Link';
+import Link from '@/components/ui/Link';
 import ShowPassword from '@/components/ShowPassword';
 import { toaster } from '@/components/ui/toaster';
 import { type User } from '@/context/AuthContext';

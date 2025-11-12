@@ -1,33 +1,37 @@
-import { Box } from '@chakra-ui/react/box';
-
-import type { ReactNode, MouseEventHandler } from 'react';
+import { Icon, Text } from '@chakra-ui/react';
+import type { IconType } from 'react-icons/lib';
+import NavLink from './ui/NavLink';
 
 type NavItemProps = {
-  icon?: React.ComponentType<{ size?: number; style?: React.CSSProperties }>;
-  children: ReactNode;
-  isActive?: boolean;
-  onClick?: MouseEventHandler<HTMLElement>;
-  href?: string;
+  icon: IconType;
+  item: string;
+  path: string;
 };
 
-const NavItem = ({ icon: Icon, children, isActive, onClick }: NavItemProps) => (
-  <Box
-    as="li"
-    display="flex"
-    alignItems="center"
-    p={2.5}
-    pl={4}
-    borderRadius="lg"
-    cursor="pointer"
-    bg={isActive ? 'gray.900' : 'transparent'}
-    color={isActive ? 'whiteAlpha.950' : 'gray.300'}
-    _hover={{ bg: 'gray.900' }}
-    onClick={onClick}
-    transition="background-color 0.2s"
-  >
-    {Icon && <Icon size={18} style={{ marginRight: '12px' }} />}
-    <span style={{ fontWeight: '500' }}>{children}</span>
-  </Box>
-);
+const NavItem = ({ icon: NavIcon, item, path }: NavItemProps) => {
+  return (
+    <NavLink
+      display="flex"
+      alignItems="center"
+      columnGap="5"
+      py="2.5"
+      px="4"
+      borderRadius="2xl"
+      cursor="pointer"
+      // bg={isActive ? 'gray.900' : 'transparent'}
+      // color={isActive ? 'whiteAlpha.950' : 'gray.300'}
+      _hover={{ bg: 'gray.900' }}
+      _focus={{ outline: 'none' }}
+      to={path}
+    >
+      <Icon size="md">
+        <NavIcon />
+      </Icon>
+      <Text as="span" fontWeight="medium" fontSize="sm">
+        {item}
+      </Text>
+    </NavLink>
+  );
+};
 
 export default NavItem;
