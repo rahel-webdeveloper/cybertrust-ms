@@ -16,6 +16,8 @@ import {
 } from '@chakra-ui/react';
 import reactImg from '@/assets/react.svg';
 import { Form } from 'react-router-dom';
+import ShowPassword from '@/components/ShowPassword';
+import { useState } from 'react';
 
 const signupSchema = z
   .object({
@@ -43,6 +45,7 @@ const SignupForm = () => {
   } = useForm<SignupData>({
     resolver: zodResolver(signupSchema),
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: SignupData) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -128,8 +131,12 @@ const SignupForm = () => {
                   rounded="full"
                   size="lg"
                   py="5"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="***********"
+                />
+                <ShowPassword
+                  onToggle={() => setShowPassword(!showPassword)}
+                  isVisible={showPassword}
                 />
                 <FieldErrorText>{errors.password?.message}</FieldErrorText>
               </Field.Root>
@@ -146,8 +153,12 @@ const SignupForm = () => {
                   rounded="full"
                   size="lg"
                   py="5"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="***********"
+                />
+                <ShowPassword
+                  onToggle={() => setShowPassword(!showPassword)}
+                  isVisible={showPassword}
                 />
                 <FieldErrorText>
                   {errors.confirmPassword?.message}

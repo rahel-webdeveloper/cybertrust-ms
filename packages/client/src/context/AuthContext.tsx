@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import API from '@/api/axios-Instance';
 
@@ -25,8 +25,10 @@ const fetchUser = async (): Promise<User> =>
   API.get('api/auth/me').then((res) => res.data);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem('ct-token')
+  );
   const queryClient = useQueryClient();
-
   const {
     data: user,
     isLoading,
@@ -34,28 +36,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   } = useQuery<User, Error>({
     queryKey: ['user'],
     queryFn: () => fetchUser(),
-    enabled: !!localStorage.getItem('ct-token'),
-    retry: 5,
-    retryDelay: 3000,
+    enabled: !!token,
+    retry: false,
+    staleTime: Infinity,
   });
 
-  console.log(isLoading, 'Loading user...');
-
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('ct-token');
+    setToken(null);
+
     queryClient.setQueryData(['user'], null);
     queryClient.invalidateQueries();
-  };
+  }, [queryClient]);
 
   const loginSuccess = useCallback(
-    (token: string) => {
-      localStorage.setItem('ct-token', `${token}`);
+    (newToken: string) => {
+      localStorage.setItem('ct-token', `${newToken}`);
+      setToken(newToken);
+
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     [queryClient]
   );
 
-  if (isError && !isLoading) logout();
+  useEffect(() => {
+    if (isError && !isLoading) logout();
+  }, [isError, isLoading, logout]);
 
   return (
     <AuthContext.Provider value={{ user, isLoading, logout, loginSuccess }}>

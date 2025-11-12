@@ -1,7 +1,8 @@
+import API from '@/api/axios-Instance';
+import reactImg from '@/assets/react.svg';
 import Link from '@/components/Link';
-import { useForm } from 'react-hook-form';
-import z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import ShowPassword from '@/components/ShowPassword';
+import { useAuth, type User } from '@/context/AuthContext';
 import {
   Button,
   Field,
@@ -13,14 +14,15 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import reactImg from '@/assets/react.svg';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Form, useNavigate } from 'react-router-dom';
-import API from '@/api/axios-Instance';
-import { useAuth, type User } from '@/context/AuthContext';
+import z from 'zod';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  password: z.string().min(1, 'Please write your passord'),
 });
 
 type LoginData = z.infer<typeof loginSchema>;
@@ -40,17 +42,19 @@ const LoginForm = () => {
   });
   const { loginSuccess } = useAuth();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: LoginData) => {
     console.log(data);
     const {
-      data: { token, user },
+      data: { token, user: userdata },
     } = await API.post<ResponseLoginType>('api/auth/login', data);
 
     loginSuccess(token);
     navigate('/app');
 
-    console.log(user);
+    // after login succeeds
+    console.log(userdata);
   };
 
   return (
@@ -113,8 +117,12 @@ const LoginForm = () => {
                 rounded="full"
                 size="lg"
                 py="5"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="***********"
+              />
+              <ShowPassword
+                onToggle={() => setShowPassword(!showPassword)}
+                isVisible={showPassword}
               />
               <FieldErrorText>{errors.password?.message}</FieldErrorText>
             </Field.Root>

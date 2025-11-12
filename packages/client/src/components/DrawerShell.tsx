@@ -33,8 +33,8 @@ const DrawerShell = () => {
             <Drawer.Body>
               {/* Replaced generic p/Input with standard NavItems */}
               <Stack ml={2} gap={2} mt="0">
-                {navData.map((item) => (
-                  <Link to={item.path}>
+                {navData.map((item, idx) => (
+                  <Link to={item.path} key={idx}>
                     <NavItem
                       key={item.name}
                       icon={item.icon}
@@ -51,11 +51,9 @@ const DrawerShell = () => {
 
             <Drawer.Footer>
               {/* Standard footer buttons */}
-              <Drawer.Trigger>
-                <Button variant="outline" mr={3}>
-                  Cancel
-                </Button>
-              </Drawer.Trigger>
+              <Button variant="outline" mr={3}>
+                Cancel
+              </Button>
               <Button>Save</Button>
             </Drawer.Footer>
             <Drawer.CloseTrigger asChild>
