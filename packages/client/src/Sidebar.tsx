@@ -4,10 +4,8 @@ import { useAuth } from './context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
-
-  console.log(user);
 
   return (
     <Flex m="4" gap="2">

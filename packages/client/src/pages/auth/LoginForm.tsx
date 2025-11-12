@@ -62,7 +62,6 @@ const LoginForm = () => {
       navigate('/app/dashboard');
     },
     onError: (error: { message: string; status: number }) => {
-      console.log(error.status);
       toaster.create({
         closable: true,
         type: 'error',

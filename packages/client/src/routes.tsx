@@ -4,6 +4,8 @@ import { Text } from '@chakra-ui/react';
 import SignupForm from './pages/auth/SignupForm';
 import AuthLayout from './pages/auth/AuthLayout';
 import LoginForm from './pages/auth/LoginForm';
+import { protectAppLoader } from './loaders/app-loader';
+import HydrationFallback from './components/HydrationFallback';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,8 @@ const router = createBrowserRouter([
   {
     path: 'app',
     element: <App />,
+    loader: protectAppLoader,
+    hydrateFallbackElement: <HydrationFallback />,
     children: [
       {
         index: true,
