@@ -1,7 +1,9 @@
+import API from '@/api/axios-Instance';
+import reactImg from '@/assets/react.svg';
 import Link from '@/components/Link';
-import { useForm } from 'react-hook-form';
-import z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import ShowPassword from '@/components/ShowPassword';
+import { toaster } from '@/components/ui/toaster';
+import type { User } from '@/context/AuthContext';
 import {
   Box,
   Button,
@@ -14,10 +16,12 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import reactImg from '@/assets/react.svg';
-import { Form } from 'react-router-dom';
-import ShowPassword from '@/components/ShowPassword';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Form, useNavigate } from 'react-router-dom';
+import z from 'zod';
 
 const signupSchema = z
   .object({
@@ -35,35 +39,66 @@ const signupSchema = z
     path: ['confirmPassword'],
   });
 
-type SignupData = z.infer<typeof signupSchema>;
+type SignupFormData = z.infer<typeof signupSchema>;
+
+export type APIErrorType = {
+  message: string;
+  status: number;
+};
+
+type SignupResponseType = {
+  token: string;
+  user: User;
+};
 
 const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<SignupData>({
+    formState: { errors },
+  } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
   });
-  const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = async (data: SignupData) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    // reset();
-  };
+  const queryClient = useQueryClient();
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const { isPending, mutate } = useMutation<
+    SignupResponseType,
+    APIErrorType,
+    SignupFormData
+  >({
+    mutationFn: (formData: SignupFormData) =>
+      API.post('api/auth/sign-up', formData).then((res) => res.data),
+    onSuccess: (newUser: SignupResponseType) => {
+      localStorage.setItem('ct-token', newUser.token.toString());
+      queryClient.setQueryData(['user'], () => newUser.user);
+      navigate('/app/dashboard');
+    },
+    onError: (error: { message: string; status: number }) => {
+      console.log(error.status);
+      toaster.create({
+        closable: true,
+        type: 'error',
+        title: 'Sign Up Failed',
+        description:
+          (error.status === 409 && 'User with this email already exist') ||
+          'Something went wrong. Please try again later.',
+      });
+    },
+  });
 
   return (
     <Fieldset.Root
-      p={4} // padding
-      maxWidth="md" // max-width
+      p={4}
+      maxWidth="md"
       borderWidth={1}
       borderRadius="lg"
       m="auto"
       border="none"
       my={10}
       rounded="xl"
-      onSubmit={handleSubmit(onSubmit)}
     >
       <Stack p={4} gap={2}>
         <Fieldset.Legend fontSize="1.3rem" textAlign="center">
@@ -84,12 +119,16 @@ const SignupForm = () => {
           are not an authorized user, please do not log in or create an account.
         </Fieldset.HelperText>
 
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form
+          onSubmit={handleSubmit((formData: SignupFormData) =>
+            mutate(formData)
+          )}
+        >
           <Stack p={4} gap={6}>
             <Field.Root
               id="name"
               invalid={Boolean(errors.name)}
-              disabled={isSubmitting}
+              disabled={isPending}
             >
               <Field.Label>Name</Field.Label>
               <Input
@@ -105,7 +144,7 @@ const SignupForm = () => {
             <Field.Root
               id="email"
               invalid={Boolean(errors.email)}
-              disabled={isSubmitting}
+              disabled={isPending}
             >
               <Field.Label>Email</Field.Label>
               <Input
@@ -122,7 +161,7 @@ const SignupForm = () => {
               <Field.Root
                 id="password"
                 invalid={Boolean(errors.password)}
-                disabled={isSubmitting}
+                disabled={isPending}
               >
                 <Field.Label>Password</Field.Label>
 
@@ -144,7 +183,7 @@ const SignupForm = () => {
               <Field.Root
                 id="confirmPassword"
                 invalid={Boolean(errors.confirmPassword)}
-                disabled={isSubmitting}
+                disabled={isPending}
               >
                 <Field.Label>Confirm Password</Field.Label>
 
@@ -171,9 +210,9 @@ const SignupForm = () => {
               rounded="full"
               size="lg"
               loadingText="Signing up..."
-              loading={isSubmitting}
+              loading={isPending}
             >
-              {isSubmitting && <Spinner size="sm" mr={2} />}
+              {isPending && <Spinner size="sm" mr={2} />}
               Sign Up
             </Button>
           </Stack>

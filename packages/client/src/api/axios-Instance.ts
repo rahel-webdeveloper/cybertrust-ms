@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 
 const API = axios.create({
@@ -11,9 +12,9 @@ API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('ct-token');
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    else config.headers.Authorization = '';
+
     return config;
   },
   (err) => {

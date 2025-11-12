@@ -2,7 +2,8 @@ import API from '@/api/axios-Instance';
 import reactImg from '@/assets/react.svg';
 import Link from '@/components/Link';
 import ShowPassword from '@/components/ShowPassword';
-import { useAuth, type User } from '@/context/AuthContext';
+import { toaster } from '@/components/ui/toaster';
+import { type User } from '@/context/AuthContext';
 import {
   Button,
   Field,
@@ -15,19 +16,21 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, useNavigate } from 'react-router-dom';
 import z from 'zod';
+import type { APIErrorType } from './SignupForm';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email'),
   password: z.string().min(1, 'Please write your passord'),
 });
 
-type LoginData = z.infer<typeof loginSchema>;
+type LoginFormData = z.infer<typeof loginSchema>;
 
-type ResponseLoginType = {
+type LoginResponseType = {
   token: string;
   user: User;
 };
@@ -36,31 +39,45 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginData>({
+    formState: { errors },
+  } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
-  const { loginSuccess } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = async (data: LoginData) => {
-    console.log(data);
-    const {
-      data: { token, user: userdata },
-    } = await API.post<ResponseLoginType>('api/auth/login', data);
-
-    loginSuccess(token);
-    navigate('/app');
-
-    // after login succeeds
-    console.log(userdata);
-  };
+  const { isPending, mutate } = useMutation<
+    LoginResponseType,
+    APIErrorType,
+    LoginFormData
+  >({
+    mutationFn: (formData: LoginFormData) =>
+      API.post<LoginResponseType>('api/auth/login', formData).then(
+        (res) => res.data
+      ),
+    onSuccess: (newUser: LoginResponseType) => {
+      localStorage.setItem('ct-token', newUser.token.toString());
+      queryClient.setQueryData(['user'], () => newUser.user);
+      navigate('/app/dashboard');
+    },
+    onError: (error: { message: string; status: number }) => {
+      console.log(error.status);
+      toaster.create({
+        closable: true,
+        type: 'error',
+        title: 'Login Failed',
+        description:
+          (error.status === 400 && 'Invalid email or password') ||
+          'Something went wrong. Please try again later.',
+      });
+    },
+  });
 
   return (
     <Fieldset.Root
-      p={4} // padding
-      maxWidth="md" // max-width
+      p={4}
+      maxWidth="md"
       borderWidth={1}
       borderRadius="lg"
       m="auto"
@@ -87,12 +104,12 @@ const LoginForm = () => {
           are not an authorized user, please do not log in or create an account.
         </Fieldset.HelperText>
 
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit((data: LoginFormData) => mutate(data))}>
           <Stack p={4} gap={6}>
             <Field.Root
               id="email"
               invalid={Boolean(errors.email)}
-              disabled={isSubmitting}
+              disabled={isPending}
             >
               <Field.Label>Email</Field.Label>
               <Input
@@ -108,7 +125,7 @@ const LoginForm = () => {
             <Field.Root
               id="password"
               invalid={Boolean(errors.password)}
-              disabled={isSubmitting}
+              disabled={isPending}
             >
               <Field.Label>Password</Field.Label>
 
@@ -133,9 +150,9 @@ const LoginForm = () => {
               size="lg"
               mt="5"
               loadingText="Loging..."
-              loading={isSubmitting}
+              loading={isPending}
             >
-              {isSubmitting && <Spinner size="sm" mr={2} />}
+              {isPending && <Spinner size="sm" mr={2} />}
               Login
             </Button>
           </Stack>
