@@ -2,22 +2,33 @@ import { HStack, Icon } from '@chakra-ui/react';
 import { Bell } from 'lucide-react';
 import ProfileAvatar from './ProfileAvatar';
 import SearchLabel from './SearchBar';
-import Sidebar from '@/Sidebar';
+import Sidebar, { type OpenSidebarProps } from '@/Sidebar';
+import { Tooltip } from './ui/tooltip';
 
-const AppHeader = () => {
+const AppHeader = ({ sidebarStatus }: OpenSidebarProps) => {
   return (
     <HStack
       justifyContent="space-between"
       borderBottomWidth="1px"
       px={5}
-      py={4}
+      h="5rem"
+      position="sticky"
+      top="0"
+      p={4}
+      backdropFilter="blur(15px)"
     >
-      <Sidebar />
+      <Sidebar sidebarStatus={sidebarStatus} />
       <SearchLabel />
       <HStack columnGap="4">
-        <Icon _hover={{ opacity: 0.7 }} cursor="pointer" transition="opacity">
-          <Bell />
-        </Icon>
+        <Tooltip
+          content="You have no new notifications"
+          contentProps={{ css: { '--tooltip-bg': 'colors.gray.300' } }}
+          interactive
+        >
+          <Icon cursor="pointer" transition="opacity">
+            <Bell />
+          </Icon>
+        </Tooltip>
         <ProfileAvatar />
       </HStack>
     </HStack>

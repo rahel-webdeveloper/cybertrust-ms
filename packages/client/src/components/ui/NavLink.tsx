@@ -3,7 +3,7 @@ import {
   type LinkProps as ChakraLinkProps,
 } from '@chakra-ui/react';
 import {
-  NavLink as RouterLink,
+  NavLink as RouterNavLink,
   type NavLinkProps as RouterNavLinkProps,
 } from 'react-router-dom';
 import { forwardRef, type ReactNode } from 'react';
@@ -18,7 +18,7 @@ const NavLink = forwardRef<HTMLAnchorElement, LinkProps>(
   ({ to, children, ...props }, ref) => {
     return (
       <ChakraLink
-        as={RouterLink} // RouterLink is rendered under the hood
+        as={RouterNavLink} // RouterLink is rendered under the hood
         ref={ref}
         {...({ to, ...props } as unknown as ChakraLinkProps &
           RouterNavLinkProps)} // pass both Chakra and Router props

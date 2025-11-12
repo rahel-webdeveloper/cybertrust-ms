@@ -53,10 +53,50 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'users',
+        path: 'employees',
         element: (
           <Text fontSize="2xl" textAlign="center" pt="10">
-            Users Page for Admin
+            Employee Page for Admin
+          </Text>
+        ),
+      },
+      {
+        path: 'team',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            All Teams for admin
+          </Text>
+        ),
+      },
+      {
+        path: 'projects',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            All Project for admin
+          </Text>
+        ),
+      },
+      {
+        path: 'tasks',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            Project Tasks
+          </Text>
+        ),
+      },
+      {
+        path: 'quotations',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            Project Quotations
+          </Text>
+        ),
+      },
+      {
+        path: 'costs',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            Projects costs
           </Text>
         ),
       },
@@ -65,6 +105,14 @@ const router = createBrowserRouter([
         element: (
           <Text fontSize="2xl" textAlign="center" pt="10">
             App Settings
+          </Text>
+        ),
+      },
+      {
+        path: 'about',
+        element: (
+          <Text fontSize="2xl" textAlign="center" pt="10">
+            About page
           </Text>
         ),
       },

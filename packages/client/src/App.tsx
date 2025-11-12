@@ -1,15 +1,21 @@
-import { Box, Grid } from '@chakra-ui/react';
+import { Box, Flex, Grid } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
+import SidebarShell from './components/SidebarShell';
+import { useState } from 'react';
 
 function App() {
+  const [openSidebar, setOpenSidebar] = useState(false);
   return (
-    <Grid direction="column">
-      <AppHeader />
-      <Box flex="1" p={4} border={'red'}>
-        <Outlet />
-      </Box>
-    </Grid>
+    <Flex h="dvh" overflowX="auto">
+      <SidebarShell isSidebarOpen={openSidebar} />
+      <Grid flex="1">
+        <AppHeader sidebarStatus={() => setOpenSidebar(!openSidebar)} />
+        <Box flex="1" p={4} border={'red'} h="">
+          <Outlet />
+        </Box>
+      </Grid>
+    </Flex>
   );
 }
 

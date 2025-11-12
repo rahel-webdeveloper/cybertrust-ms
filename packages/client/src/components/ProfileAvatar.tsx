@@ -5,12 +5,7 @@ const ProfileAvatar = () => {
   const { user } = useAuth();
 
   return (
-    <Avatar.Root
-      shape="full"
-      size="lg"
-      cursor="pointer"
-      _hover={{ opacity: 0.8 }}
-    >
+    <Avatar.Root shape="full" size="lg" cursor="pointer">
       <Avatar.Fallback name={user!.name} />
       <Avatar.Image src="https://bit.ly/sage-adebayo" />
       <Float placement="bottom-start" offsetX="2" offsetY="1">

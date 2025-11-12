@@ -3,7 +3,7 @@ import { CloseButton, Drawer, Grid, Portal, Stack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import NavItem from './NavItem';
 import { Link } from 'react-router-dom';
-import { Columns2 } from 'lucide-react';
+import { PanelRightIcon } from 'lucide-react';
 
 const DrawerShell = () => {
   const ref = useRef<HTMLInputElement | null>(null);
@@ -12,21 +12,20 @@ const DrawerShell = () => {
     // We keep your working Ark UI structure:
     <Drawer.Root placement="start" initialFocusEl={() => ref.current}>
       <Drawer.Trigger
+        display={{ base: 'block', md: 'none' }}
         asChild
-        ml={2}
         cursor="pointer"
-        color="gray.300"
         _hover={{ opacity: 0.7 }}
         transition="all"
       >
-        <Columns2 />
+        <PanelRightIcon />
       </Drawer.Trigger>
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
           <Drawer.Content>
             <Drawer.Header>
-              <Drawer.Title>CybeTrust</Drawer.Title>
+              <Drawer.Title fontSize="xl">CybeTrust</Drawer.Title>
             </Drawer.Header>
 
             <Drawer.Body>
