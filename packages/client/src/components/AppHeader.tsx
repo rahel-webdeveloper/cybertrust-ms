@@ -2,10 +2,16 @@ import { HStack, Icon } from '@chakra-ui/react';
 import { Bell } from 'lucide-react';
 import ProfileAvatar from './ProfileAvatar';
 import SearchLabel from './SearchBar';
-import Sidebar, { type OpenSidebarProps } from '@/Sidebar';
+import SidebarSmallDevice from '@/SidebarSmallDevice';
 import { Tooltip } from './ui/tooltip';
+import type { SidebarItemsType } from '@/App';
 
-const AppHeader = ({ sidebarStatus }: OpenSidebarProps) => {
+export type SidebarItemsAndStatus = {
+  sidebarStatus?: () => void;
+  sidebarItems: SidebarItemsType[];
+};
+
+const AppHeader = ({ sidebarStatus, sidebarItems }: SidebarItemsAndStatus) => {
   return (
     <HStack
       justifyContent="space-between"
@@ -17,7 +23,10 @@ const AppHeader = ({ sidebarStatus }: OpenSidebarProps) => {
       p={4}
       backdropFilter="blur(15px)"
     >
-      <Sidebar sidebarStatus={sidebarStatus} />
+      <SidebarSmallDevice
+        sidebarItems={sidebarItems}
+        sidebarStatus={sidebarStatus}
+      />
       <SearchLabel />
       <HStack columnGap="4">
         <Tooltip

@@ -1,11 +1,16 @@
-import { sidebarNav, sidebarNavBottom } from '../data/cosnt-data';
+import { sidebarNavBottom } from '../data/cosnt-data';
 import { CloseButton, Drawer, Grid, Portal, Stack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import NavItem from './NavItem';
 import { Link } from 'react-router-dom';
 import { PanelRightIcon } from 'lucide-react';
+import type { SidebarItemsType } from '@/App';
 
-const DrawerShell = () => {
+const DrawerShell = ({
+  sidebarItems,
+}: {
+  sidebarItems: SidebarItemsType[];
+}) => {
   const ref = useRef<HTMLInputElement | null>(null);
 
   return (
@@ -31,7 +36,7 @@ const DrawerShell = () => {
             <Drawer.Body>
               {/* Replaced generic p/Input with standard NavItems */}
               <Stack as="ul" ml={4} gap={2} mt="0">
-                {sidebarNav.map((item) => (
+                {sidebarItems.map((item) => (
                   <NavItem
                     key={item.name}
                     navIcon={item.icon}

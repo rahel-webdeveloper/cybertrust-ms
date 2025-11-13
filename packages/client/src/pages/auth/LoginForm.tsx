@@ -1,5 +1,5 @@
 import API from '@/api/axios-Instance';
-import reactImg from '@/assets/react.svg';
+import cyberTrustImg from '@/assets/ct-logo.webp';
 import Link from '@/components/ui/Link';
 import ShowPassword from '@/components/ShowPassword';
 import { toaster } from '@/components/ui/toaster';
@@ -86,7 +86,7 @@ const LoginForm = () => {
     >
       <Stack p={4} gap={2}>
         <Fieldset.Legend fontSize="1.3rem" textAlign="center">
-          <Image src={reactImg} w="3rem" mx="auto" mb="8" />
+          <Image src={cyberTrustImg} w="5rem" mx="auto" mb="8" rounded="xl" />
           Welcome Back to{' '}
           <Text as="span" color="lightskyblue">
             Cybertrust

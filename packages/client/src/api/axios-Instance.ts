@@ -38,7 +38,7 @@ API.interceptors.response.use(
         type: 'error',
       });
     }
-    if (err.response && err.response.status !== 401)
+    if (err.response && err.response.status === 404)
       toaster.create({
         title: 'Network Error',
         description: 'Check your internet connection.',

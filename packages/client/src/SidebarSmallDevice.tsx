@@ -1,12 +1,12 @@
 import { Flex, Icon } from '@chakra-ui/react';
-import DrawerShell from './components/DrawerShell';
 import { PanelRight } from 'lucide-react';
+import DrawerShell from './components/DrawerShell';
+import type { SidebarItemsAndStatus } from './components/AppHeader';
 
-export type OpenSidebarProps = {
-  sidebarStatus: () => void;
-};
-
-const Sidebar = ({ sidebarStatus }: OpenSidebarProps) => {
+const SidebarSmallDevice = ({
+  sidebarStatus,
+  sidebarItems,
+}: SidebarItemsAndStatus) => {
   return (
     <Flex>
       <Icon
@@ -18,9 +18,9 @@ const Sidebar = ({ sidebarStatus }: OpenSidebarProps) => {
       >
         <PanelRight />
       </Icon>
-      <DrawerShell />
+      <DrawerShell sidebarItems={sidebarItems} />
     </Flex>
   );
 };
 
-export default Sidebar;
+export default SidebarSmallDevice;

@@ -1,8 +1,17 @@
 import { Box, Stack, Text, VStack } from '@chakra-ui/react';
 import NavItem from './NavItem';
-import { sidebarNav, sidebarNavBottom } from '@/data/cosnt-data';
+import { sidebarNavBottom } from '@/data/cosnt-data';
+import type { SidebarItemsType } from '@/App';
 
-const SidebarShell = ({ isSidebarOpen }: { isSidebarOpen: boolean }) => {
+type LargeSidebarProps = {
+  isSidebarOpen: boolean;
+  sidebarItems: SidebarItemsType[];
+};
+
+const SidebarLargeDevice = ({
+  isSidebarOpen,
+  sidebarItems,
+}: LargeSidebarProps) => {
   return (
     <VStack
       data-state="open"
@@ -44,7 +53,7 @@ const SidebarShell = ({ isSidebarOpen }: { isSidebarOpen: boolean }) => {
         </Text>
 
         <Stack rowGap={2} mt="8">
-          {sidebarNav.map((item) => (
+          {sidebarItems.map((item) => (
             <NavItem
               key={item.name}
               navIcon={item.icon}
@@ -71,4 +80,4 @@ const SidebarShell = ({ isSidebarOpen }: { isSidebarOpen: boolean }) => {
   );
 };
 
-export default SidebarShell;
+export default SidebarLargeDevice;
