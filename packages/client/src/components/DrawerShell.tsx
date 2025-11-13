@@ -34,7 +34,7 @@ const DrawerShell = () => {
                 {sidebarNav.map((item) => (
                   <NavItem
                     key={item.name}
-                    icon={item.icon}
+                    navIcon={item.icon}
                     item={item.name}
                     path={item.path}
                   />
@@ -49,7 +49,7 @@ const DrawerShell = () => {
                     <NavItem
                       key={item.name}
                       path={item.path}
-                      icon={item.icon}
+                      navIcon={item.icon}
                       item={item.name}
                     />
                   </Link>

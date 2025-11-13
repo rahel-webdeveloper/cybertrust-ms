@@ -1,4 +1,4 @@
-import { Grid, Stack, Text, VStack } from '@chakra-ui/react';
+import { Box, Stack, Text, VStack } from '@chakra-ui/react';
 import NavItem from './NavItem';
 import { sidebarNav, sidebarNavBottom } from '@/data/cosnt-data';
 
@@ -10,48 +10,63 @@ const SidebarShell = ({ isSidebarOpen }: { isSidebarOpen: boolean }) => {
         animationName: 'fade-in, scale-in',
         animationDuration: '300ms',
       }}
-      alignItems="start"
-      textAlign="center"
-      display={{ base: 'none', md: 'block' }}
+      display={{ base: 'none', md: 'flex' }}
+      justifyContent="space-between"
       borderWidth="1px"
       as="aside"
       position="sticky"
       top="0"
-      h="dvh"
-      color="white"
+      h="full"
       p={4}
       w={isSidebarOpen ? '15rem' : '5rem'}
       transitionProperty="width"
       transitionDuration="moderate"
       transitionTimingFunction="ease-in-out"
-      overflow="hidden"
+      overflowX="hidden"
+      overflowY="auto"
+      scrollbar={'hidden'}
     >
-      <Text fontSize="xl" fontWeight="600">
-        {isSidebarOpen ? 'CyberTrust' : 'CT'}
-      </Text>
+      <Box w="full">
+        <Text
+          fontSize="lg"
+          fontWeight="600"
+          letterSpacing={!isSidebarOpen ? 'widest' : 'wide'}
+          textAlign="center"
+          bg="teal.400/40"
+          rounded="xl"
+          w="min-content"
+          px="2.5"
+          mx="auto"
+          mt="2"
+          cursor="pointer"
+        >
+          {isSidebarOpen ? 'CYBERTRUST' : 'CT'}
+        </Text>
 
-      <Stack rowGap={2} mt="10">
-        {sidebarNav.map((item) => (
+        <Stack rowGap={2} mt="8">
+          {sidebarNav.map((item) => (
+            <NavItem
+              key={item.name}
+              navIcon={item.icon}
+              item={item.name}
+              path={item.path}
+              isSidebarOpen={isSidebarOpen}
+            />
+          ))}
+        </Stack>
+      </Box>
+
+      <Stack rowGap="2" w="full">
+        {sidebarNavBottom.map((item) => (
           <NavItem
             key={item.name}
-            icon={item.icon}
-            item={item.name}
+            navIcon={item.icon}
             path={item.path}
+            item={item.name}
             isSidebarOpen={isSidebarOpen}
           />
         ))}
       </Stack>
-
-      <Grid rowGap="2" mt="6rem">
-        {sidebarNavBottom.map((item) => (
-          <NavItem
-            key={item.name}
-            path={item.path}
-            icon={item.icon}
-            item={item.name}
-          />
-        ))}
-      </Grid>
     </VStack>
   );
 };

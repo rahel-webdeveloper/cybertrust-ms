@@ -6,12 +6,14 @@ import { useState } from 'react';
 
 function App() {
   const [openSidebar, setOpenSidebar] = useState(false);
+
   return (
     <Flex h="dvh" overflowX="auto">
       <SidebarShell isSidebarOpen={openSidebar} />
-      <Grid flex="1">
+      <Grid flex="1" templateRows="auto 1fr">
         <AppHeader sidebarStatus={() => setOpenSidebar(!openSidebar)} />
-        <Box flex="1" p={4} border={'red'} h="">
+
+        <Box flex="1" p={4}>
           <Outlet />
         </Box>
       </Grid>

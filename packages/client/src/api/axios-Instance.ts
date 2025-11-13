@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { toaster } from '@/components/ui/toaster';
 import axios from 'axios';
 
 const API = axios.create({
@@ -26,8 +27,24 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (response) => response,
   async (err) => {
-    const originalRequest = err.config;
+    // const originalRequest = err.config;
     // Handle 401 errors and retry methanism...
+    if (err.response && err.response.status === 401) {
+      localStorage.removeItem('ct-token');
+
+      toaster.create({
+        title: 'Unauthorized',
+        description: 'Your session has expired.',
+        type: 'error',
+      });
+    }
+    if (err.response && err.response.status !== 401)
+      toaster.create({
+        title: 'Network Error',
+        description: 'Check your internet connection.',
+        type: 'error',
+      });
+
     return Promise.reject(err);
   }
 );
