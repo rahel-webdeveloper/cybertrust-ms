@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import SidebarLargeDevice from './components/SidebarLargeDevice';
 import { useState } from 'react';
-import { sidebarNav } from './data/cosnt-data';
+import { sidebarNavTop } from './data/nav-data';
 import type { LucideIcon } from 'lucide-react';
 
 export type SidebarItemsType = {
@@ -15,12 +15,11 @@ export type SidebarItemsType = {
 
 function App() {
   const user = useLoaderData();
+  const [openSidebar, setOpenSidebar] = useState(false);
 
-  const filteredSidebarItems = sidebarNav.filter((item) =>
+  const filteredSidebarItems = sidebarNavTop.filter((item) =>
     item.roles.find((role) => role === user.role)
   );
-
-  const [openSidebar, setOpenSidebar] = useState(false);
 
   return (
     <Flex h="dvh" overflowX="auto">

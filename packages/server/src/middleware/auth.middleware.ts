@@ -31,6 +31,7 @@ export const protect = (allowedRoles?: string[]) => {
 
       if (!user) {
         res.status(401).json({ message: 'User not found' });
+        return;
       }
 
       req.user = {
@@ -41,9 +42,8 @@ export const protect = (allowedRoles?: string[]) => {
       };
 
       if (allowedRoles && !allowedRoles.includes(user!.role)) {
-        return res
-          .status(403)
-          .json({ message: 'Forbidden: insufficient role' });
+        res.status(403).json({ message: 'Forbidden: insufficient role' });
+        return;
       }
 
       next();

@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 
 const { Schema, model } = mongoose;
 
+const ACCOUNT_STATUSES = ['active', 'inactive', 'suspended'];
 const USER_ROLES = ['admin', 'manager', 'employee'];
 
 const userSchema = new Schema(
@@ -28,6 +29,16 @@ const userSchema = new Schema(
       type: String,
       enum: USER_ROLES,
       default: 'employee',
+    },
+    status: {
+      type: String,
+      enum: ACCOUNT_STATUSES,
+      default: 'active',
+    },
+    profile: {
+      phone: { type: String, trim: true },
+      country: { type: String, trim: true },
+      avatarUrl: { type: String, trim: true },
     },
   },
   {

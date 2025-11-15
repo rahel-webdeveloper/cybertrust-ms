@@ -34,8 +34,11 @@ API.interceptors.response.use(
 
       toaster.create({
         title: 'Unauthorized',
-        description: 'Your session has expired.',
+        description:
+          'It looks like something went wrong, please login again or go home page.',
         type: 'error',
+        closable: true,
+        duration: 3000,
       });
     }
     if (err.response && err.response.status === 404)
@@ -43,6 +46,8 @@ API.interceptors.response.use(
         title: 'Network Error',
         description: 'Check your internet connection.',
         type: 'error',
+        closable: true,
+        duration: 3000,
       });
 
     return Promise.reject(err);

@@ -49,7 +49,7 @@ export const headerNav = [
   },
 ];
 
-export const sidebarNav = [
+export const sidebarNavTop = [
   // DASHBOARD - All roles
   {
     name: 'Dashboard',
@@ -67,17 +67,17 @@ export const sidebarNav = [
     subItems: [
       {
         name: 'All Employees',
-        path: '/employees',
+        path: 'employees',
         roles: ['admin', 'manager'],
       },
       {
         name: 'Add Employee',
-        path: '/employees/create',
+        path: 'employees/create',
         roles: ['admin'],
       },
       {
         name: 'Employee Reports',
-        path: '/employees/reports',
+        path: 'employees/reports',
         roles: ['admin'],
       },
     ],
@@ -100,7 +100,7 @@ export const sidebarNav = [
     subItems: [
       {
         name: 'All Projects',
-        path: '/projects',
+        path: 'projects',
         roles: ['admin', 'manager', 'employee'],
       },
       {

@@ -14,7 +14,7 @@ const taskSchema = new Schema(
     },
     title: { type: String, required: true, trim: true },
     description: { type: String, trim: true },
-    assignedTo: { type: Types.ObjectId, ref: 'Employee' },
+    assignedTo: [{ type: Types.ObjectId, ref: 'Employee' }],
     status: { type: String, enum: TASK_STATUSES, default: 'todo' },
     dueDate: { type: Date },
   },

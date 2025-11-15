@@ -39,7 +39,7 @@ projectSchema.virtual('quotations', {
   foreignField: 'projectId',
 });
 
-projectSchema.virtual('quotations', {
+projectSchema.virtual('tasks', {
   ref: 'Task',
   localField: '_id',
   foreignField: 'projectId',

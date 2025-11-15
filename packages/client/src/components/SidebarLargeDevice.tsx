@@ -1,6 +1,6 @@
 import { Box, Stack, Text, VStack } from '@chakra-ui/react';
 import NavItem from './NavItem';
-import { sidebarNavBottom } from '@/data/cosnt-data';
+import { sidebarNavBottom } from '@/data/nav-data';
 import type { SidebarItemsType } from '@/App';
 
 type LargeSidebarProps = {
@@ -21,7 +21,7 @@ const SidebarLargeDevice = ({
       }}
       display={{ base: 'none', md: 'flex' }}
       justifyContent="space-between"
-      borderWidth="1px"
+      borderRightWidth="1px"
       as="aside"
       position="sticky"
       top="0"

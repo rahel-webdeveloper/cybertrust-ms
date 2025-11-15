@@ -15,14 +15,14 @@ const quotationSchema = new Schema(
     amount: { type: Number, required: true },
     description: { type: String, trim: true },
     status: { type: String, enum: QUOTATION_STATUSES, default: 'pending' },
-    createdAt: { type: Date, default: Date.now },
   },
   {
     // we include timestamps=false because we already have createdAt explicitly.
+    timestamps: true,
     toJSON: { virtuals: true },
   }
 );
 
-const Quotation = model('Cost', quotationSchema);
+const Quotation = model('Quotation', quotationSchema);
 
 export default Quotation;

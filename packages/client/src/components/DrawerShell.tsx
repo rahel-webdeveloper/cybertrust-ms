@@ -1,4 +1,4 @@
-import { sidebarNavBottom } from '../data/cosnt-data';
+import { sidebarNavBottom } from '../data/nav-data';
 import { CloseButton, Drawer, Grid, Portal, Stack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import NavItem from './NavItem';
