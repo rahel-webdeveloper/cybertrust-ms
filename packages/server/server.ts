@@ -2,7 +2,12 @@ import express, { type Request, type Response } from 'express';
 import connectDb from './src/db/db-connection';
 import authRouter from './src/routes/auth.route';
 import cors from 'cors';
-import { faker } from '@faker-js/faker';
+import userRoutes from './src/routes/users.route';
+import employeesRoutes from './src/routes/employees.route';
+import projectRoutes from './src/routes/projects.route';
+import tasksRoutes from './src/routes/tasks.route';
+import quotationsRoutes from './src/routes/quotations.route';
+import costsRoutes from './src/routes/costs.route';
 
 const app = express();
 
@@ -18,11 +23,16 @@ app.use(express.json());
 const PORT = Bun.env.PORT || 5000;
 
 app.use('/api/auth', authRouter);
+app.use('/api/users', userRoutes);
+app.use('/api/employees', employeesRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/tasks', tasksRoutes);
+app.use('/api/quotations', quotationsRoutes);
+app.use('/api/costs', costsRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.json({
     message: 'Hello via Cyber Trust MS app server',
-    email: faker.internet.password(),
   });
 });
 
