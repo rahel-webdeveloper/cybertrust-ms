@@ -18,8 +18,6 @@ seedDataRoutes.post('/', async (req: Request, res: Response) => {
 
   // ‼️Be careful do not uncomment for production may it have price to you.
 
-  // await Employee.find();
-
   // await seedUsers();
 
   // await seedEmployees();

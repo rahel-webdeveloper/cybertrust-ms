@@ -1,14 +1,12 @@
 import { Router, type Request, type Response } from 'express';
+import Employee from '../models/employee.model';
+import { employeesController } from '../controllers/employees.controller';
 
 const employeesRoutes = Router();
 
-employeesRoutes.get('/', (req: Request, res: Response) => {
-  res.send('Get all employees');
-});
+employeesRoutes.get('/', employeesController.listEmployees);
 
-employeesRoutes.get('/:id', (req: Request, res: Response) => {
-  res.send(`Get employee with ID ${req.params.id}`);
-});
+employeesRoutes.get('/:id', employeesController.getEmployee);
 
 employeesRoutes.post('/', (req: Request, res: Response) => {
   res.send('Create a new employee');

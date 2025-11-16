@@ -8,6 +8,8 @@ import { protectAppLoader } from './loaders/app-loader';
 import HydrationFallback from './components/HydrationFallback';
 import ErrorPage from './pages/ErrorPage';
 import NotFoundPage from './pages/NotFoundPage';
+import EmployeesLayout from './pages/employee/EmployeesLayout';
+import EmployeesList from './pages/employee/EmployeesList';
 
 const router = createBrowserRouter([
   {
@@ -57,11 +59,13 @@ const router = createBrowserRouter([
       },
       {
         path: 'employees',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            Employee Page for Admin
-          </Text>
-        ),
+        element: <EmployeesLayout />,
+        children: [
+          {
+            index: true,
+            element: <EmployeesList />,
+          },
+        ],
       },
       {
         path: 'team',
