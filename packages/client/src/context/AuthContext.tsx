@@ -2,13 +2,7 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import API from '@/api/axios-Instance';
-
-export type User = {
-  name: string;
-  email: string;
-  role: string;
-  id: string;
-};
+import type { User } from '@/queries/useEmplyeesList';
 
 type AuthContextType = {
   user: User | null | undefined;

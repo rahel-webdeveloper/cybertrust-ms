@@ -6,7 +6,22 @@ const { Schema, model } = mongoose;
 const ACCOUNT_STATUSES = ['active', 'inactive', 'suspended'];
 const USER_ROLES = ['admin', 'manager', 'employee'];
 
-const userSchema = new Schema(
+export interface UserDocument extends Document {
+  name: string;
+  email: string;
+  password: string; // stored hashed
+  role: 'admin' | 'manager' | 'employee' | 'client';
+  status: 'active' | 'inactive';
+  profile?: {
+    avatarUrl?: string;
+    phone?: string;
+    country?: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const userSchema = new Schema<UserDocument>(
   {
     name: {
       type: String,

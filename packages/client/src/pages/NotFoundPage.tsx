@@ -23,12 +23,12 @@ const NotFoundPage = () => {
           404 - Lost in Space
         </Heading>
 
-        <Text fontSize="lg" color="gray.400">
+        <Text fontSize="lg" color="gray.300">
           The page you are looking for has taken off and can't be reached.
         </Text>
 
-        <Button size="lg" mt={4} variant="surface" rounded="full">
-          <Link to="/app" _focus={{ outline: 'none' }}>
+        <Button size="lg" w="70%" mt={4} variant="surface" rounded="full">
+          <Link to="/app" _focus={{ outline: 'none' }} fontWeight="400">
             Return to Earth{' '}
             <Icon as={EarthIcon} ml="2" color="green.400" size="md" />
           </Link>

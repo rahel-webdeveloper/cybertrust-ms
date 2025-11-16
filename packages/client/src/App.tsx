@@ -22,7 +22,7 @@ function App() {
   );
 
   return (
-    <Flex h="dvh" overflowX="auto">
+    <Flex h="dvh" overflowX="auto" scrollbar={'hidden'}>
       <SidebarLargeDevice
         sidebarItems={filteredSidebarItems}
         isSidebarOpen={openSidebar}
@@ -34,7 +34,7 @@ function App() {
           sidebarItems={filteredSidebarItems}
         />
 
-        <Box flex="1" p={4}>
+        <Box flex="1" p={4} mt="24">
           <Outlet />
         </Box>
       </Grid>

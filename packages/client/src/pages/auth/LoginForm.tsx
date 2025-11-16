@@ -1,9 +1,6 @@
-import API from '@/api/axios-Instance';
 import cyberTrustImg from '@/assets/ct-logo.webp';
 import Link from '@/components/ui/Link';
 import ShowPassword from '@/components/ShowPassword';
-import { toaster } from '@/components/ui/toaster';
-import { type User } from '@/context/AuthContext';
 import {
   Button,
   Field,
@@ -16,24 +13,18 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, useNavigate } from 'react-router-dom';
 import z from 'zod';
-import type { APIErrorType } from './SignupForm';
+import { useLogin } from '@/queries/useLogin';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email'),
   password: z.string().min(1, 'Please write your passord'),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
-
-type LoginResponseType = {
-  token: string;
-  user: User;
-};
+export type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginForm = () => {
   const {
@@ -44,35 +35,17 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState(false);
 
-  const { isPending, mutate } = useMutation<
-    LoginResponseType,
-    APIErrorType,
-    LoginFormData
-  >({
-    mutationFn: (formData: LoginFormData) =>
-      API.post<LoginResponseType>('api/auth/login', formData).then(
-        (res) => res.data
-      ),
-    onSuccess: (newUser: LoginResponseType) => {
-      localStorage.setItem('ct-token', newUser.token.toString());
-      queryClient.setQueryData(['user'], () => newUser.user);
-      navigate('/app/dashboard');
-    },
-    onError: (error: { message: string; status: number }) => {
-      toaster.create({
-        closable: true,
-        type: 'error',
-        title: 'Login Failed',
-        description:
-          (error.status === 400 && 'Invalid email or password') ||
-          'Something went wrong. Please try again later.',
-      });
-    },
-  });
+  const { isPending, mutate } = useLogin();
 
+  const onSubmit = (data: LoginFormData) => {
+    mutate(data, {
+      onSuccess: () => {
+        navigate('/app');
+      },
+    });
+  };
   return (
     <Fieldset.Root
       p={4}
@@ -103,7 +76,7 @@ const LoginForm = () => {
           are not an authorized user, please do not log in or create an account.
         </Fieldset.HelperText>
 
-        <Form onSubmit={handleSubmit((data: LoginFormData) => mutate(data))}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack p={4} gap={6}>
             <Field.Root
               id="email"

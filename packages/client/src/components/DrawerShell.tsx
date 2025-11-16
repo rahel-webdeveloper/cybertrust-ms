@@ -2,7 +2,6 @@ import { sidebarNavBottom } from '../data/nav-data';
 import { CloseButton, Drawer, Grid, Portal, Stack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import NavItem from './NavItem';
-import { Link } from 'react-router-dom';
 import { PanelRightIcon } from 'lucide-react';
 import type { SidebarItemsType } from '@/App';
 
@@ -49,15 +48,13 @@ const DrawerShell = ({
 
             <Drawer.Footer justifyContent="normal">
               <Grid rowGap="2">
-                {sidebarNavBottom.map((item, idx) => (
-                  <Link to={item.path} key={idx}>
-                    <NavItem
-                      key={item.name}
-                      path={item.path}
-                      navIcon={item.icon}
-                      item={item.name}
-                    />
-                  </Link>
+                {sidebarNavBottom.map((item) => (
+                  <NavItem
+                    key={item.name}
+                    path={item.path}
+                    navIcon={item.icon}
+                    item={item.name}
+                  />
                 ))}
               </Grid>
             </Drawer.Footer>

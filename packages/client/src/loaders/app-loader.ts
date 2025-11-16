@@ -1,5 +1,5 @@
 import API from '@/api/axios-Instance';
-import type { User } from '@/context/AuthContext';
+import type { User } from '@/queries/useEmplyeesList';
 import { redirect } from 'react-router-dom';
 
 export const protectAppLoader = async () => {

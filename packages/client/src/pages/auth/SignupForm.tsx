@@ -1,9 +1,7 @@
-import API from '@/api/axios-Instance';
 import cyberTrustImg from '@/assets/ct-logo.webp';
-import Link from '@/components/ui/Link';
 import ShowPassword from '@/components/ShowPassword';
-import { toaster } from '@/components/ui/toaster';
-import type { User } from '@/context/AuthContext';
+import Link from '@/components/ui/Link';
+import { useSignup } from '@/queries/useSignup';
 import {
   Box,
   Button,
@@ -17,7 +15,6 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, useNavigate } from 'react-router-dom';
@@ -39,17 +36,7 @@ const signupSchema = z
     path: ['confirmPassword'],
   });
 
-type SignupFormData = z.infer<typeof signupSchema>;
-
-export type APIErrorType = {
-  message: string;
-  status: number;
-};
-
-type SignupResponseType = {
-  token: string;
-  user: User;
-};
+export type SignupFormData = z.infer<typeof signupSchema>;
 
 const SignupForm = () => {
   const {
@@ -60,34 +47,15 @@ const SignupForm = () => {
     resolver: zodResolver(signupSchema),
   });
 
-  const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const { isPending, mutate } = useMutation<
-    SignupResponseType,
-    APIErrorType,
-    SignupFormData
-  >({
-    mutationFn: (formData: SignupFormData) =>
-      API.post('api/auth/sign-up', formData).then((res) => res.data),
-    onSuccess: (newUser: SignupResponseType) => {
-      localStorage.setItem('ct-token', newUser.token.toString());
-      queryClient.setQueryData(['user'], () => newUser.user);
-      navigate('/app/dashboard');
-    },
-    onError: (error: { message: string; status: number }) => {
-      console.log(error.status);
-      toaster.create({
-        closable: true,
-        type: 'error',
-        title: 'Sign Up Failed',
-        description:
-          (error.status === 409 && 'User with this email already exist') ||
-          'Something went wrong. Please try again later.',
-      });
-    },
-  });
+  const { isPending, mutate } = useSignup();
+
+  const onSubmit = (data: SignupFormData) =>
+    mutate(data, {
+      onSuccess: () => navigate('/app'),
+    });
 
   return (
     <Fieldset.Root
@@ -119,11 +87,7 @@ const SignupForm = () => {
           are not an authorized user, please do not log in or create an account.
         </Fieldset.HelperText>
 
-        <Form
-          onSubmit={handleSubmit((formData: SignupFormData) =>
-            mutate(formData)
-          )}
-        >
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack p={4} gap={6}>
             <Field.Root
               id="name"
