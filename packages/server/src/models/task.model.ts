@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema, model, Types } = mongoose;
 
-const TASK_STATUSES = ['todo', 'in_progress', 'done', 'blocked'];
+const TASK_STATUSES = ['todo', 'in_progress', 'done'];
 
 const taskSchema = new Schema(
   {

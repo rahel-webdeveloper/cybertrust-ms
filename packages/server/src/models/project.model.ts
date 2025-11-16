@@ -45,6 +45,6 @@ projectSchema.virtual('tasks', {
   foreignField: 'projectId',
 });
 
-const Project = model('Project');
+const Project = model('Project', projectSchema);
 
 export default Project;
