@@ -1,38 +1,37 @@
+// @/store/useTableSelectionStore.ts
+import type { EmployeeDataResponse } from '@/queries/useEmplyeesList';
 import { create } from 'zustand';
 
-export interface Item {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-}
+// Adjust interface to match your data structure if necessary, or keep it generic
+// interface Item { id: string; name: string; /*... */ }
+// Since your code uses email as the key, we'll stick with that logic.
 
 interface SelectionState {
-  items: Item[];
-  selection: string[];
+  items: EmployeeDataResponse[]; // Using 'any' for flexibility, ideally define the full Employee type here
+  setItems: (items: EmployeeDataResponse[]) => void;
+  selection: string[]; // This holds the list of selected Emails/IDs
   toggleAll: (checked: boolean) => void;
-  toggleItem: (name: string) => void;
+  toggleItem: (id: string) => void; // Renamed 'name' to 'id' for clarity
 }
 
 export const useTableSelectionStore = create<SelectionState>((set, get) => ({
-  items: [
-    { id: 1, name: 'Laptop', category: 'Electronics', price: 999.99 },
-    { id: 2, name: 'Coffee Maker', category: 'Home Appliances', price: 49.99 },
-    { id: 3, name: 'Desk Chair', category: 'Furniture', price: 150.0 },
-    { id: 4, name: 'Smartphone', category: 'Electronics', price: 799.99 },
-    { id: 5, name: 'Headphones', category: 'Accessories', price: 199.99 },
-  ],
+  items: [],
   selection: [],
-  toggleAll: (cheked) => {
+  setItems: (newItems: EmployeeDataResponse[]) =>
+    set({
+      items: newItems,
+      selection: [], // Clear selection when new items arrive
+    }),
+  toggleAll: (checked) => {
     const { items } = get();
-    set({ selection: cheked ? items.map((item) => item.name) : [] });
+    // Assuming each item has a user.email field used as the ID
+    set({ selection: checked ? items.map((item) => item.user.email) : [] });
   },
-  toggleItem: (name) => {
+  toggleItem: (id) => {
     const { selection } = get();
-    // Add name if not present, remove if present
-    const newSelection = selection.includes(name)
-      ? selection.filter((item) => item !== name)
-      : [...selection, name];
+    const newSelection = selection.includes(id)
+      ? selection.filter((item) => item !== id)
+      : [...selection, id];
     set({ selection: newSelection });
   },
 }));

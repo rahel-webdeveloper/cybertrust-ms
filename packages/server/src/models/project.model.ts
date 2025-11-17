@@ -13,7 +13,7 @@ const projectSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     description: { type: String, trim: true },
-    managerId: { type: Types.ObjectId, ref: 'User', index: true },
+    manager: { type: Types.ObjectId, ref: 'User', index: true },
     team: [{ type: Types.ObjectId, ref: 'Employee' }],
     budget: { type: Number, min: 0, default: 0 },
     deadline: { type: Date },

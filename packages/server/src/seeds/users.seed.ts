@@ -39,10 +39,10 @@ export const seedUsers = async () => {
       new User({
         name: faker.person.fullName(),
         email: faker.internet.email().toLowerCase(),
-        password: 'employee123',
-        role: 'employee',
+        password: 'developer123',
+        role: 'developer',
         profile: {
-          avatarUrl: faker.image.personPortrait({ sex: 'male', size: 256 }),
+          avatarUrl: faker.image.personPortrait({ sex: 'male', size: 512 }),
           country: faker.location.country(),
           phone: faker.phone.number(),
         },

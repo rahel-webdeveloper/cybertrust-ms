@@ -18,9 +18,8 @@ const AppHeader = ({ sidebarStatus, sidebarItems }: SidebarItemsAndStatus) => {
       borderBottomWidth="1px"
       px={5}
       h="5rem"
-      position="fixed"
+      position="sticky"
       top="0"
-      w={{ base: '100dvw', md: '93dvw' }}
       p={4}
       zIndex={1}
       backdropFilter="blur(15px)"

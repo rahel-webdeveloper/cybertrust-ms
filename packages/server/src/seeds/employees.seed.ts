@@ -3,7 +3,7 @@ import Employee from '../models/employee.model';
 import User from '../models/user.model';
 
 export const seedEmployees = async () => {
-  const users = await User.find({ role: 'employee' });
+  const users = await User.find({ role: { $in: ['manager', 'developer'] } });
 
   const employeesArray = users.map((user) => ({
     hireDate: faker.date.past({
@@ -26,7 +26,7 @@ export const seedEmployees = async () => {
       'Intern',
       'Specialist',
     ]),
-    userId: user._id,
+    user: user._id,
     salary: faker.finance.amount({ min: 40000, max: 120000, dec: 0 }),
   }));
 

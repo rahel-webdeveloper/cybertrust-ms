@@ -4,24 +4,9 @@ import bcrypt from 'bcrypt';
 const { Schema, model } = mongoose;
 
 const ACCOUNT_STATUSES = ['active', 'inactive', 'suspended'];
-const USER_ROLES = ['admin', 'manager', 'employee'];
+const USER_ROLES = ['admin', 'manager', 'developer'];
 
-export interface UserDocument extends Document {
-  name: string;
-  email: string;
-  password: string; // stored hashed
-  role: 'admin' | 'manager' | 'employee' | 'client';
-  status: 'active' | 'inactive';
-  profile?: {
-    avatarUrl?: string;
-    phone?: string;
-    country?: string;
-  };
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const userSchema = new Schema<UserDocument>(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -43,7 +28,7 @@ const userSchema = new Schema<UserDocument>(
     role: {
       type: String,
       enum: USER_ROLES,
-      default: 'employee',
+      default: 'developer',
     },
     status: {
       type: String,

@@ -4,7 +4,7 @@ const { Schema, model, Types } = mongoose;
 
 const costSchema = new Schema(
   {
-    projectId: {
+    project: {
       type: Types.ObjectId,
       ref: 'Project',
       required: true,

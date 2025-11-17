@@ -35,9 +35,7 @@ export interface EmployeeDataResponse {
     email: string;
     role: string;
     status: string;
-    avatarUrl?: string;
-    phone?: string;
-    country?: string;
+    profile: Profile;
   };
 }
 

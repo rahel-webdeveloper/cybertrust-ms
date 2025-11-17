@@ -10,7 +10,7 @@ export const seedCosts = async () => {
   for (const project of projects) {
     for (let i = 0; i < 3; i++) {
       costs.push({
-        projectId: project._id,
+        project: project._id,
         amount: faker.finance.amount({
           min: 100,
           max: 5000,

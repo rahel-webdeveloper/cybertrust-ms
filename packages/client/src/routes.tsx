@@ -6,7 +6,7 @@ import AuthLayout from './pages/auth/AuthLayout';
 import LoginForm from './pages/auth/LoginForm';
 import { protectAppLoader } from './loaders/app-loader';
 import HydrationFallback from './components/HydrationFallback';
-import ErrorPage from './pages/ErrorPage';
+// import ErrorPage from './pages/ErrorPage';
 import NotFoundPage from './pages/NotFoundPage';
 import EmployeesLayout from './pages/employee/EmployeesLayout';
 import EmployeesList from './pages/employee/EmployeesList';
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     element: <App />,
     loader: protectAppLoader,
     hydrateFallbackElement: <HydrationFallback />,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
     children: [
       {
         index: true,

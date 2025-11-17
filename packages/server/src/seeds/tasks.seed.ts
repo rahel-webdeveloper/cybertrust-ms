@@ -12,10 +12,10 @@ export const seedTasks = async () => {
       const assigned = faker.helpers.arrayElement(project.team);
 
       tasks.push({
-        projectId: project._id,
+        project: project._id,
         title: faker.company.catchPhrase(),
         description: faker.lorem.sentences({ min: 1, max: 4 }),
-        assignedTo: [assigned._id],
+        assigned: [assigned._id],
         status: faker.helpers.arrayElement(['todo', 'in_progress', 'done']),
         dueDate: faker.date.future({
           years: 1,

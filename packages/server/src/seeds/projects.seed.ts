@@ -18,7 +18,7 @@ export const seedProjects = async () => {
       description: faker.lorem.paragraphs(
         faker.helpers.arrayElement([3, 4, 5, 6])
       ),
-      managerId: manager._id,
+      manager: manager._id,
       team: team.map((e) => e._id),
       budget: faker.finance.amount({ min: 5000, max: 50000 }),
       deadline: faker.date.future({
@@ -30,7 +30,6 @@ export const seedProjects = async () => {
           'active',
           'completed',
           'on_hold',
-          'cancelled',
         ])
         .toString(),
     });
