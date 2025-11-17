@@ -2,13 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema, model, Types } = mongoose;
 
-const PROJECT_STATUSES = [
-  'planning',
-  'active',
-  'completed',
-  'on_hold',
-  'cancelled',
-];
+const PROJECT_STATUSES = ['planning', 'active', 'completed', 'on_hold'];
 const projectSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },

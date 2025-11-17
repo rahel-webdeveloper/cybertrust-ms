@@ -6,10 +6,11 @@ import AuthLayout from './pages/auth/AuthLayout';
 import LoginForm from './pages/auth/LoginForm';
 import { protectAppLoader } from './loaders/app-loader';
 import HydrationFallback from './components/HydrationFallback';
-// import ErrorPage from './pages/ErrorPage';
+import ErrorPage from './pages/ErrorPage';
 import NotFoundPage from './pages/NotFoundPage';
 import EmployeesLayout from './pages/employee/EmployeesLayout';
 import EmployeesList from './pages/employee/EmployeesList';
+import DashboardLayout from './pages/dashboard/DashboardLayout';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
     element: <App />,
     loader: protectAppLoader,
     hydrateFallbackElement: <HydrationFallback />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -51,11 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            This is the dashboard for diffrent roles.
-          </Text>
-        ),
+        element: <DashboardLayout />,
       },
       {
         path: 'employees',

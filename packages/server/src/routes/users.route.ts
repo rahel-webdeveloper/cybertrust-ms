@@ -1,9 +1,12 @@
 import { Router, type Request, type Response } from 'express';
+import User from '../models/user.model';
 
 const userRoutes = Router();
 
-userRoutes.get('/', (req: Request, res: Response) => {
-  res.send('Get all users');
+userRoutes.get('/', async (req: Request, res: Response) => {
+  const users = await User.find();
+
+  res.send({ success: true, data: users });
 });
 
 userRoutes.get('/:id', (req: Request, res: Response) => {

@@ -1,9 +1,12 @@
 import { Router, type Request, type Response } from 'express';
+import Cost from '../models/cost.model';
 
 const costsRoutes = Router();
 
-costsRoutes.get('/', (req: Request, res: Response) => {
-  res.send('Get all costs');
+costsRoutes.get('/', async (req: Request, res: Response) => {
+  const costs = await Cost.find();
+
+  res.status(200).json({ success: true, data: costs });
 });
 
 costsRoutes.get('/:id', (req: Request, res: Response) => {

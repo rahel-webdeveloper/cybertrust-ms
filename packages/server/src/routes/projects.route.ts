@@ -1,12 +1,15 @@
 import { Router, type Request, type Response } from 'express';
+import Project from '../models/project.model';
 
 const projectRoutes = Router();
 
-projectRoutes.get('/', (req: Request, res: Response) => {
-  res.send('Get all projects');
+projectRoutes.get('/', async (req: Request, res: Response) => {
+  const projects = await Project.find();
+
+  res.status(200).json({ success: true, data: projects });
 });
 
-projectRoutes.get('/:id', (req: Request, res: Response) => {
+projectRoutes.get('/:id', async (req: Request, res: Response) => {
   res.send(`Get project with ID ${req.params.id}`);
 });
 
