@@ -9,13 +9,19 @@ const TableRows = () => {
   const setItems = useTableSelectionStore((state) => state.setItems);
   const items = useTableSelectionStore((state) => state.items);
 
-  const { data: employeesData, isLoading, error } = useEmployeesList();
+  const {
+    data: employeesData,
+    isRefetching,
+    isLoading,
+    error,
+  } = useEmployeesList();
 
   useEffect(() => {
     if (employeesData?.data) setItems(employeesData.data);
   }, [employeesData, setItems]);
 
-  if (isLoading) return <Spinner mt="7" size="md" />;
+  if (isLoading || isRefetching)
+    return <Spinner mt="7" w=" full" borderWidth={'3px'} size="md" />;
 
   if (error) return;
 

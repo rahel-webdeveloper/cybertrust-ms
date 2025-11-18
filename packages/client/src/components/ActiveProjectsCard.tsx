@@ -29,9 +29,9 @@ type ProjectStatusOBJ = {
 };
 
 const ActiveProjectsCard = () => {
-  const { data: projects, isLoading } = useProjectFetch();
+  const { data: projects, isLoading, isRefetching } = useProjectFetch();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isRefetching) return <Spinner />;
 
   const projectStatusCount: ProjectStatusOBJ = projects.data.reduce(
     (acc: ProjectStatusOBJ, curr: Project) => {

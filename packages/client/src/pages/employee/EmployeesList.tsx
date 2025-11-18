@@ -11,7 +11,7 @@ const EmployeesList = () => {
   const indeterminate = selection.length > 0 && selection.length < items.length;
 
   return (
-    <Box maxW="100%" overflowX="auto" scrollbar="hidden">
+    <Box w="full" overflowX="auto" scrollbar="hidden">
       <EmployeesActionBar />
       <Table.Root maxW="dvw" overflowY={'auto'}>
         <Table.Header>

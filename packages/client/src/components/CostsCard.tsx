@@ -17,9 +17,9 @@ type Cost = {
 };
 
 const CostsCard = () => {
-  const { data: projectCosts, isLoading } = useCostsFetch();
+  const { data: projectCosts, isLoading, isRefetching } = useCostsFetch();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isRefetching) return <Spinner />;
 
   const totalCost = projectCosts.data.reduce(
     (acc: number, curr: Cost) => (acc += curr.amount),

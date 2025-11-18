@@ -11,9 +11,9 @@ import {
 import { ArrowUpCircle, UserCheck } from 'lucide-react';
 
 const TotalUserCard = () => {
-  const { data, isLoading } = useUserFetch();
+  const { data, isLoading, isRefetching } = useUserFetch();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isRefetching) return <Spinner />;
 
   return (
     <Stat.Root borderWidth={'1px'} padding={'7'} rounded={'xl'} gap="">
