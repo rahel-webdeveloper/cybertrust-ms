@@ -1,9 +1,12 @@
 import { Router, type Request, type Response } from 'express';
+import Quotation from '../models/quotation.model';
 
 const quotationsRoutes = Router();
 
-quotationsRoutes.get('/', (req: Request, res: Response) => {
-  res.send('Get all quotations');
+quotationsRoutes.get('/', async (req: Request, res: Response) => {
+  const quotations = await Quotation.find().populate('project').lean();
+
+  res.status(200).json({ success: true, data: quotations });
 });
 
 quotationsRoutes.get('/:id', (req: Request, res: Response) => {

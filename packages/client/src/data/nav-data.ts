@@ -15,7 +15,7 @@ export const headerNav = [
   {
     name: 'Dashboard',
     path: '/dashboard',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'Employees',
@@ -25,17 +25,17 @@ export const headerNav = [
   {
     name: 'Team',
     path: '/team',
-    roles: ['manager', 'employee'],
+    roles: ['manager', 'developer'],
   },
   {
     name: 'Projects',
     path: '/projects',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'Tasks',
     path: '/tasks',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'Quotations',
@@ -45,7 +45,7 @@ export const headerNav = [
   {
     name: 'Costs',
     path: '/costs',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
 ];
 
@@ -55,7 +55,7 @@ export const sidebarNavTop = [
     name: 'Dashboard',
     icon: AlignHorizontalDistributeCenter,
     path: 'dashboard',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
 
   // EMPLOYEES - Admin full, Manager view only, Employee none
@@ -88,7 +88,7 @@ export const sidebarNavTop = [
     name: 'Team',
     icon: UserCheck,
     path: 'team',
-    roles: ['manager', 'employee'],
+    roles: ['manager', 'developer'],
   },
 
   // PROJECTS - All roles with different access
@@ -96,12 +96,12 @@ export const sidebarNavTop = [
     name: 'Projects',
     icon: Folders,
     path: 'projects',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
     subItems: [
       {
         name: 'All Projects',
         path: 'projects',
-        roles: ['admin', 'manager', 'employee'],
+        roles: ['admin', 'manager', 'developer'],
       },
       {
         name: 'New Project',
@@ -121,12 +121,12 @@ export const sidebarNavTop = [
     name: 'Tasks',
     icon: Waypoints,
     path: 'tasks',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
     subItems: [
       {
         name: 'All Tasks',
         path: '/tasks',
-        roles: ['admin', 'manager', 'employee'],
+        roles: ['admin', 'manager', 'developer'],
       },
       {
         name: 'Assign Task',
@@ -136,7 +136,7 @@ export const sidebarNavTop = [
       {
         name: 'Task Status',
         path: '/tasks/status',
-        roles: ['admin', 'manager', 'employee'],
+        roles: ['admin', 'manager', 'developer'],
       },
     ],
   },
@@ -171,17 +171,17 @@ export const sidebarNavTop = [
     name: 'Costs',
     icon: DollarSign,
     path: 'costs',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
     subItems: [
       {
         name: 'All Costs',
         path: '/costs',
-        roles: ['admin', 'manager', 'employee'],
+        roles: ['admin', 'manager', 'developer'],
       },
       {
         name: 'Log Cost',
         path: '/costs/create',
-        roles: ['admin', 'manager', 'employee'],
+        roles: ['admin', 'manager', 'developer'],
       },
       {
         name: 'Cost Reports',
@@ -198,13 +198,13 @@ export const sidebarNavBottom = [
     name: 'Settings',
     icon: Settings,
     path: 'settings',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'About',
     icon: CircleQuestionMark,
     path: 'about',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
 ];
 
@@ -213,7 +213,7 @@ export const mobileTabs = [
     name: 'Dashboard',
     icon: AlignHorizontalDistributeCenter,
     path: '/dashboard',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'Employees',
@@ -225,25 +225,25 @@ export const mobileTabs = [
     name: 'Team',
     icon: UserCheck,
     path: '/team',
-    roles: ['manager'],
+    roles: ['manager', 'developer'],
   },
   {
     name: 'Projects',
     icon: Folders,
     path: '/projects',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'Tasks',
     icon: Waypoints,
     path: '/tasks',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'Costs',
     icon: DollarSign,
     path: '/costs',
-    roles: ['admin', 'manager', 'employee'],
+    roles: ['admin', 'manager', 'developer'],
   },
   {
     name: 'Profile',

@@ -1,16 +1,13 @@
 import { Router, type Request, type Response } from 'express';
-
-// GET /api/tasks
-// GET /api/tasks/:id
-// POST /api/tasks
-// PUT /api/tasks/:id
-// DELETE /api/tasks/:id
-// PUT /api/tasks/:id/status
+import Quotation from '../models/quotation.model';
+import Task from '../models/task.model';
 
 const tasksRoutes = Router();
 
-tasksRoutes.get('/', (req: Request, res: Response) => {
-  res.send('Get all tasks');
+tasksRoutes.get('/', async (req: Request, res: Response) => {
+  const tasks = await Task.find().populate('project').lean();
+
+  res.status(200).json({ success: true, data: tasks });
 });
 
 tasksRoutes.get('/:id', (req: Request, res: Response) => {
