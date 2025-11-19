@@ -20,6 +20,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       <ChakraLink
         as={RouterLink} // RouterLink is rendered under the hood
         ref={ref}
+        _focus={{ outline: 'none' }}
         {...({ to, ...props } as unknown as ChakraLinkProps & RouterLinkProps)} // pass both Chakra and Router props
       >
         {children}

@@ -1,14 +1,7 @@
 import { useProjectFetch } from '@/queries/useProjects';
-import {
-  Badge,
-  Box,
-  FormatNumber,
-  Icon,
-  Spinner,
-  Stat,
-  Text,
-} from '@chakra-ui/react';
+import { Badge, Box, FormatNumber, Icon, Stat, Text } from '@chakra-ui/react';
 import { ArrowUpCircle, Footprints } from 'lucide-react';
+import DashboardCardSkeleton from './DashboardCardSkeleton';
 
 type Project = {
   id: string;
@@ -31,7 +24,7 @@ type ProjectStatusOBJ = {
 const ActiveProjectsCard = () => {
   const { data: projects, isLoading, isRefetching } = useProjectFetch();
 
-  if (isLoading || isRefetching) return <Spinner />;
+  if (isLoading || isRefetching) return <DashboardCardSkeleton />;
 
   const projectStatusCount: ProjectStatusOBJ = projects.data.reduce(
     (acc: ProjectStatusOBJ, curr: Project) => {
@@ -73,6 +66,7 @@ const ActiveProjectsCard = () => {
         <Box>
           <Badge
             colorPalette="green"
+            bgColor={'green.300/15'}
             variant={'surface'}
             fontSize={'md'}
             rounded={'lg'}

@@ -8,12 +8,12 @@ export type Profile = {
 };
 
 export type User = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;
   status: string;
-  avatarUrl?: string;
+  profile: Profile;
 };
 
 export type Employee = {
@@ -41,7 +41,7 @@ export interface EmployeeDataResponse {
 
 // type GetEmployeesResponse
 
-export const useEmployeesList = () => {
+export const useEmployeesFetch = () => {
   return useQuery({
     queryKey: ['employees-list'],
     queryFn: () => API.get('api/employees').then((res) => res.data),

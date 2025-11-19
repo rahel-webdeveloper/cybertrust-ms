@@ -1,4 +1,4 @@
-import { useEmployeesList } from '@/queries/useEmplyeesList';
+import { useEmployeesFetch } from '@/queries/useEmplyees';
 import { useTableSelectionStore } from '@/store/useTableSelectionStore';
 import { Avatar, Badge, Checkbox, Spinner, Table } from '@chakra-ui/react';
 import { useEffect } from 'react';
@@ -14,7 +14,7 @@ const TableRows = () => {
     isRefetching,
     isLoading,
     error,
-  } = useEmployeesList();
+  } = useEmployeesFetch();
 
   useEffect(() => {
     if (employeesData?.data) setItems(employeesData.data);
@@ -72,10 +72,10 @@ const TableRows = () => {
               {item.user.status}
             </Badge>
           </Table.Cell>
+          <Table.Cell>${item.salary}</Table.Cell>
           <Table.Cell>
             {new Date(item.hireDate).toLocaleDateString()}
           </Table.Cell>
-          <Table.Cell>${item.salary}</Table.Cell>
         </Table.Row>
       ))}
     </>

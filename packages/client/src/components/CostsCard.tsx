@@ -1,14 +1,7 @@
 import { useCostsFetch } from '@/queries/useCosts';
-import {
-  Badge,
-  Box,
-  FormatNumber,
-  Icon,
-  Spinner,
-  Stat,
-  Text,
-} from '@chakra-ui/react';
+import { Badge, Box, FormatNumber, Icon, Stat, Text } from '@chakra-ui/react';
 import { ArrowDownCircle, Wallet } from 'lucide-react';
+import DashboardCardSkeleton from './DashboardCardSkeleton';
 
 type Cost = {
   amount: number;
@@ -19,7 +12,7 @@ type Cost = {
 const CostsCard = () => {
   const { data: projectCosts, isLoading, isRefetching } = useCostsFetch();
 
-  if (isLoading || isRefetching) return <Spinner />;
+  if (isLoading || isRefetching) return <DashboardCardSkeleton />;
 
   const totalCost = projectCosts.data.reduce(
     (acc: number, curr: Cost) => (acc += curr.amount),
@@ -49,13 +42,14 @@ const CostsCard = () => {
         <Box>
           <Badge
             colorPalette="red"
+            bgColor={'red.500/20'}
             variant={'surface'}
             fontSize={'md'}
             rounded={'lg'}
             size="lg"
             letterSpacing={'wider'}
           >
-            <Icon size="sm" as={ArrowDownCircle} /> 11.7%
+            <Icon size="sm" as={ArrowDownCircle} /> 25.3%
           </Badge>
           <Text
             fontSize={'.7rem'}

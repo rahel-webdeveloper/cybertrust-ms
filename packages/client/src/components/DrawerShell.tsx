@@ -2,8 +2,9 @@ import { sidebarNavBottom } from '../data/nav-data';
 import { CloseButton, Drawer, Grid, Portal, Stack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import NavItem from './NavItem';
-import { PanelRightIcon } from 'lucide-react';
+import { LogOut, PanelRightIcon } from 'lucide-react';
 import type { SidebarItemsType } from '@/App';
+import { useAuth } from '@/context/AuthContext';
 
 const DrawerShell = ({
   sidebarItems,
@@ -11,6 +12,7 @@ const DrawerShell = ({
   sidebarItems: SidebarItemsType[];
 }) => {
   const ref = useRef<HTMLInputElement | null>(null);
+  const { logout } = useAuth();
 
   return (
     // We keep your working Ark UI structure:
@@ -56,6 +58,13 @@ const DrawerShell = ({
                     item={item.name}
                   />
                 ))}
+                <NavItem
+                  navIcon={LogOut}
+                  item={'Logout'}
+                  path={'/auth/login'}
+                  isSidebarOpen={false}
+                  onClick={() => logout()}
+                />
               </Grid>
             </Drawer.Footer>
             <Drawer.CloseTrigger asChild>

@@ -7,9 +7,16 @@ type NavItemProps = {
   item: string;
   path: string;
   isSidebarOpen?: boolean;
+  onClick?: () => void;
 };
 
-const NavItem = ({ navIcon, item, path, isSidebarOpen }: NavItemProps) => {
+const NavItem = ({
+  navIcon,
+  item,
+  path,
+  isSidebarOpen,
+  onClick,
+}: NavItemProps) => {
   return (
     <NavLink
       display="flex"
@@ -26,6 +33,7 @@ const NavItem = ({ navIcon, item, path, isSidebarOpen }: NavItemProps) => {
       _hover={{ bg: 'gray.900', color: '#e8e8ecff' }}
       _focus={{ outline: 'none' }}
       to={path}
+      onClick={onClick}
     >
       <NavItemContent
         item={item}

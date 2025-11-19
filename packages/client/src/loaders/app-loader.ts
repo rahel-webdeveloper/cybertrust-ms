@@ -1,5 +1,4 @@
 import API from '@/api/axios-Instance';
-import type { User } from '@/queries/useEmplyeesList';
 import { redirect } from 'react-router-dom';
 
 export const protectAppLoader = async () => {
@@ -7,7 +6,7 @@ export const protectAppLoader = async () => {
 
   if (!ctToken) return redirect('/auth/login');
 
-  const response = await API.get<User>('api/auth/me');
+  const response = await API.get('api/auth/me');
 
   return response.data;
 };

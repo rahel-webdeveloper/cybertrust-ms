@@ -9,7 +9,6 @@ export const employeesController = {
           'user',
           'name email role status profile.avatarUrl profile.phone profile.country'
         )
-        .limit(20)
         .lean();
 
       res.json({ success: true, data: employees });

@@ -1,11 +1,11 @@
-import { useEmployeesList } from '@/queries/useEmplyeesList';
+import { useEmployeesFetch } from '@/queries/useEmplyees';
 import { useTableSelectionStore } from '@/store/useTableSelectionStore';
 import { Button, Icon, HStack, IconButton, Flex } from '@chakra-ui/react';
 import { Filter, Minus, Plus, RefreshCcw, SortAsc } from 'lucide-react';
 
 const EmployeesActionBar = () => {
   const selection = useTableSelectionStore((state) => state.selection);
-  const { refetch } = useEmployeesList();
+  const { refetch } = useEmployeesFetch();
 
   return (
     <HStack mb="5" justify={'space-between'} p="2">

@@ -1,4 +1,5 @@
 import cyberTrustImg from '@/assets/ct-logo.webp';
+import dashboardImg from '@/assets/dashboard.jpg';
 import ShowPassword from '@/components/ShowPassword';
 import Link from '@/components/ui/Link';
 import { useSignup } from '@/queries/useSignup';
@@ -58,143 +59,151 @@ const SignupForm = () => {
     });
 
   return (
-    <Fieldset.Root
-      p={4}
-      maxWidth="md"
-      borderWidth={1}
-      borderRadius="lg"
-      m="auto"
-      border="none"
-      my={10}
-      rounded="xl"
+    <Box
+      display={'grid'}
+      gridTemplateColumns={{ base: 'f1', md: '1fr 1fr' }}
+      placeItems={'center'}
     >
-      <Stack p={4} gap={2}>
-        <Fieldset.Legend fontSize="1.3rem" textAlign="center">
-          <Image src={cyberTrustImg} w="5rem" mx="auto" mb="8" rounded="xl" />
-          Create Acount in{' '}
-          <Text as="span" color="lightskyblue">
-            Cybertrust
-          </Text>
-        </Fieldset.Legend>
-        <Fieldset.HelperText
-          color="gray.400"
-          textAlign="center"
-          fontWeight="400"
-          mt="3"
-        >
-          This is a private Internal Management System for Cyber Trust IT
-          Services. Access is restricted to authorized personnel only. If you
-          are not an authorized user, please do not log in or create an account.
-        </Fieldset.HelperText>
-
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Stack p={4} gap={6}>
-            <Field.Root
-              id="name"
-              invalid={Boolean(errors.name)}
-              disabled={isPending}
-            >
-              <Field.Label>Name</Field.Label>
-              <Input
-                {...register('name')}
-                rounded="full"
-                type="text"
-                size="lg"
-                placeholder="Jhon Doe"
-              />
-              <FieldErrorText>{errors.name?.message}</FieldErrorText>
-            </Field.Root>
-
-            <Field.Root
-              id="email"
-              invalid={Boolean(errors.email)}
-              disabled={isPending}
-            >
-              <Field.Label>Email</Field.Label>
-              <Input
-                {...register('email')}
-                rounded="full"
-                size="lg"
-                type="email"
-                placeholder="example@gmail.com"
-              />
-              <FieldErrorText>{errors.email?.message}</FieldErrorText>
-            </Field.Root>
-
-            <Box display="flex" columns="2" columnGap="4">
-              <Field.Root
-                id="password"
-                invalid={Boolean(errors.password)}
-                disabled={isPending}
-              >
-                <Field.Label>Password</Field.Label>
-
-                <Input
-                  {...register('password')}
-                  rounded="full"
-                  size="lg"
-                  py="5"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="***********"
-                />
-                <ShowPassword
-                  onToggle={() => setShowPassword(!showPassword)}
-                  isVisible={showPassword}
-                />
-                <FieldErrorText>{errors.password?.message}</FieldErrorText>
-              </Field.Root>
-
-              <Field.Root
-                id="confirmPassword"
-                invalid={Boolean(errors.confirmPassword)}
-                disabled={isPending}
-              >
-                <Field.Label>Confirm Password</Field.Label>
-
-                <Input
-                  {...register('confirmPassword')}
-                  rounded="full"
-                  size="lg"
-                  py="5"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="***********"
-                />
-                <ShowPassword
-                  onToggle={() => setShowPassword(!showPassword)}
-                  isVisible={showPassword}
-                />
-                <FieldErrorText>
-                  {errors.confirmPassword?.message}
-                </FieldErrorText>
-              </Field.Root>
-            </Box>
-
-            <Button
-              type="submit"
-              rounded="full"
-              size="lg"
-              loadingText="Signing up..."
-              loading={isPending}
-            >
-              {isPending && <Spinner size="sm" mr={2} />}
-              Sign Up
-            </Button>
-          </Stack>
-        </Form>
-
-        <Text fontSize="md" color="gray.200" textAlign="center">
-          Already have an account?{' '}
-          <Link
-            to="/auth/login"
-            color="blue.500"
-            _disabled={{ cursor: 'disabled' }}
-            _focus={{ outline: 'none' }}
+      <Image src={dashboardImg} display={{ base: 'none', md: 'block' }} />
+      <Fieldset.Root
+        p={4}
+        maxWidth="md"
+        borderWidth={1}
+        borderRadius="lg"
+        m="auto"
+        border="none"
+        my={10}
+        rounded="xl"
+      >
+        <Stack p={4} gap={2}>
+          <Fieldset.Legend fontSize="1.3rem" textAlign="center">
+            <Image src={cyberTrustImg} w="5rem" mx="auto" mb="8" rounded="xl" />
+            Create Acount in{' '}
+            <Text as="span" color="lightskyblue">
+              Cybertrust
+            </Text>
+          </Fieldset.Legend>
+          <Fieldset.HelperText
+            color="gray.400"
+            textAlign="center"
+            fontWeight="400"
+            mt="3"
           >
-            Log in
-          </Link>
-        </Text>
-      </Stack>
-    </Fieldset.Root>
+            This is a private Internal Management System for Cyber Trust IT
+            Services. Access is restricted to authorized personnel only. If you
+            are not an authorized user, please do not log in or create an
+            account.
+          </Fieldset.HelperText>
+
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Stack p={4} gap={6}>
+              <Field.Root
+                id="name"
+                invalid={Boolean(errors.name)}
+                disabled={isPending}
+              >
+                <Field.Label>Name</Field.Label>
+                <Input
+                  {...register('name')}
+                  rounded="full"
+                  type="text"
+                  size="lg"
+                  placeholder="Jhon Doe"
+                />
+                <FieldErrorText>{errors.name?.message}</FieldErrorText>
+              </Field.Root>
+
+              <Field.Root
+                id="email"
+                invalid={Boolean(errors.email)}
+                disabled={isPending}
+              >
+                <Field.Label>Email</Field.Label>
+                <Input
+                  {...register('email')}
+                  rounded="full"
+                  size="lg"
+                  type="email"
+                  placeholder="example@gmail.com"
+                />
+                <FieldErrorText>{errors.email?.message}</FieldErrorText>
+              </Field.Root>
+
+              <Box display="flex" columns="2" columnGap="4">
+                <Field.Root
+                  id="password"
+                  invalid={Boolean(errors.password)}
+                  disabled={isPending}
+                >
+                  <Field.Label>Password</Field.Label>
+
+                  <Input
+                    {...register('password')}
+                    rounded="full"
+                    size="lg"
+                    py="5"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="***********"
+                  />
+                  <ShowPassword
+                    onToggle={() => setShowPassword(!showPassword)}
+                    isVisible={showPassword}
+                  />
+                  <FieldErrorText>{errors.password?.message}</FieldErrorText>
+                </Field.Root>
+
+                <Field.Root
+                  id="confirmPassword"
+                  invalid={Boolean(errors.confirmPassword)}
+                  disabled={isPending}
+                >
+                  <Field.Label>Confirm Password</Field.Label>
+
+                  <Input
+                    {...register('confirmPassword')}
+                    rounded="full"
+                    size="lg"
+                    py="5"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="***********"
+                  />
+                  <ShowPassword
+                    onToggle={() => setShowPassword(!showPassword)}
+                    isVisible={showPassword}
+                  />
+                  <FieldErrorText>
+                    {errors.confirmPassword?.message}
+                  </FieldErrorText>
+                </Field.Root>
+              </Box>
+
+              <Button
+                type="submit"
+                rounded="full"
+                size="lg"
+                loadingText="Signing up..."
+                loading={isPending}
+              >
+                {isPending && <Spinner size="sm" mr={2} />}
+                Sign Up
+              </Button>
+            </Stack>
+          </Form>
+
+          <Text fontSize="md" color="gray.200" textAlign="center">
+            Already have an account?{' '}
+            <Link
+              to="/auth/login"
+              color="blue.500"
+              _disabled={{ cursor: 'disabled' }}
+              _focus={{ outline: 'none' }}
+            >
+              Log in
+            </Link>
+          </Text>
+        </Stack>
+      </Fieldset.Root>
+    </Box>
   );
 };
 

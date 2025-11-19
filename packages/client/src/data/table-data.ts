@@ -5,6 +5,6 @@ export const employeeColumns = [
   { key: 'email', label: 'Email' },
   { key: 'site', label: 'Site' },
   { key: 'status', label: 'Status' },
-  { key: 'hireDate', label: 'Hire Date' },
   { key: 'salary', label: 'Salary' },
+  { key: 'hireDate', label: 'Hire Date' },
 ];

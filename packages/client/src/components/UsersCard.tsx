@@ -1,19 +1,12 @@
 import { useUserFetch } from '@/queries/useUsers';
-import {
-  Badge,
-  Box,
-  FormatNumber,
-  Icon,
-  Spinner,
-  Stat,
-  Text,
-} from '@chakra-ui/react';
+import { Badge, Box, FormatNumber, Icon, Stat, Text } from '@chakra-ui/react';
 import { ArrowUpCircle, UserCheck } from 'lucide-react';
+import DashboardCardSkeleton from './DashboardCardSkeleton';
 
 const TotalUserCard = () => {
   const { data, isLoading, isRefetching } = useUserFetch();
 
-  if (isLoading || isRefetching) return <Spinner />;
+  if (isLoading || isRefetching) return <DashboardCardSkeleton />;
 
   return (
     <Stat.Root borderWidth={'1px'} padding={'7'} rounded={'xl'} gap="">
@@ -38,6 +31,7 @@ const TotalUserCard = () => {
           <Badge
             colorPalette="green"
             variant={'surface'}
+            bgColor={'green.300/15'}
             fontSize={'md'}
             rounded={'lg'}
             size="lg"

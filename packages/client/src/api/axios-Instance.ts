@@ -30,16 +30,15 @@ API.interceptors.response.use(
     // const originalRequest = err.config;
     // Handle 401 errors and retry methanism...
     if (err.response && err.response.status === 401) {
-      localStorage.removeItem('ct-token');
-
-      toaster.create({
-        title: 'Unauthorized',
-        description:
-          'It looks like something went wrong, please login again or go home page.',
-        type: 'error',
-        closable: true,
-        duration: 3000,
-      });
+      // localStorage.removeItem('ct-token');
+      // toaster.create({
+      //   title: 'Unauthorized',
+      //   description:
+      //     'It looks like something went wrong, please login again or go home page.',
+      //   type: 'error',
+      //   closable: true,
+      //   duration: 3000,
+      // });
     }
     if (err.response && err.response.status === 404)
       toaster.create({
