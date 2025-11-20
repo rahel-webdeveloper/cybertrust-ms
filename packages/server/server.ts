@@ -1,24 +1,23 @@
 import express, { type Request, type Response } from 'express';
 import connectDb from './src/db/db-connection';
 import authRouter from './src/routes/auth.route';
-import cors from 'cors';
-import userRoutes from './src/routes/users.route';
+import costsRoutes from './src/routes/costs.route';
 import employeesRoutes from './src/routes/employees.route';
 import projectRoutes from './src/routes/projects.route';
-import tasksRoutes from './src/routes/tasks.route';
 import quotationsRoutes from './src/routes/quotations.route';
-import costsRoutes from './src/routes/costs.route';
 import seedDataRoutes from './src/routes/seed.route';
+import tasksRoutes from './src/routes/tasks.route';
+import userRoutes from './src/routes/users.route';
 
 const app = express();
 
-app.use(
-  cors({
-    origin: Bun.env.CLIENT_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: [Bun.env.CLIENT_URL, Bun.env.MOBILE_URL],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true,
+//   })
+// );
 app.use(express.json());
 
 app.use('/api/auth', authRouter);

@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "bun --watch server.ts",
-    "mobile": ""
+    "start": "bun run ./server.ts",
+    "build": "bun build ./server.ts --outdir ./dist"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",

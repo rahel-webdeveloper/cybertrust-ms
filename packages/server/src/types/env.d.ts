@@ -7,5 +7,6 @@ declare module 'bun' {
     ADMIN_EMAIL: string;
     ADMIN_PW: string;
     CLIENT_URL: string;
+    MOBILE_URL: string;
   }
 }
