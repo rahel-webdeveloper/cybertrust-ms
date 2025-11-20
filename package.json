@@ -1,7 +1,7 @@
 {
   "name": "cybertrust-ms",
   "module": "index.ts",
-  "type": "module",
+  "type": "commonjs",
   "private": true,
   "scripts": {
     "dev": "bun --filter '*' dev"
