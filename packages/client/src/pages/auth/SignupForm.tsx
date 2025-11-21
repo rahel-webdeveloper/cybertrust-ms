@@ -64,7 +64,17 @@ const SignupForm = () => {
       gridTemplateColumns={{ base: 'f1', md: '1fr 1fr' }}
       placeItems={'center'}
     >
-      <Image src={dashboardImg} display={{ base: 'none', md: 'block' }} />
+      <Box
+        borderColor={'gray.600/20'}
+        borderWidth={7}
+        display={{ base: 'none', md: 'block' }}
+        roundedTopRight={'2xl'}
+        roundedBottomRight={'2xl'}
+        borderLeft={'none'}
+        my={'20'}
+      >
+        <Image src={dashboardImg} rounded={'2xl'} />
+      </Box>
       <Fieldset.Root
         p={4}
         maxWidth="md"

@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express, { type Request, type Response } from 'express';
 import connectDb from './src/db/db-connection';
 import authRouter from './src/routes/auth.route';
@@ -13,11 +14,12 @@ const app = express();
 
 // app.use(
 //   cors({
-//     origin: [Bun.env.CLIENT_URL, Bun.env.MOBILE_URL],
+//     origin: Bun.env.MOBILE_URL,
 //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 //     credentials: true,
 //   })
 // );
+
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
