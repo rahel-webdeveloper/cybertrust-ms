@@ -16,11 +16,7 @@ import TopEmployees from './pages/employee/TopEmployees';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <Text fontSize="4xl" textAlign="center" pt="10">
-        Landing Page
-      </Text>
-    ),
+    element: <Navigate to={'auth/login'} />,
   },
   {
     path: 'auth',
