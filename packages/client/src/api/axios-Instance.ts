@@ -8,7 +8,9 @@ const API = axios.create({
     'Content-Type': 'application/json',
   },
 });
-// Request Interceptor: Automatically attach the auth token from local storage
+
+console.log(import.meta.env.VITE_BASE_URL);
+
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('ct-token');

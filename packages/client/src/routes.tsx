@@ -11,6 +11,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import EmployeesLayout from './pages/employee/EmployeesLayout';
 import EmployeesList from './pages/employee/EmployeesList';
 import DashboardLayout from './pages/dashboard/DashboardLayout';
+import TopEmployees from './pages/employee/TopEmployees';
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EmployeesList />,
+          },
+          {
+            path: 'top-employees',
+            element: <TopEmployees />,
           },
         ],
       },

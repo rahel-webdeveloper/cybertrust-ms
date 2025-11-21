@@ -12,13 +12,13 @@ import userRoutes from './src/routes/users.route';
 
 const app = express();
 
-// app.use(
-//   cors({
-//     origin: Bun.env.MOBILE_URL,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: Bun.env.CLIENT_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 

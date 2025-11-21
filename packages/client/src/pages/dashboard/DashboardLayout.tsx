@@ -1,7 +1,7 @@
 import ActiveProjectsCard from '@/components/ActiveProjectsCard';
-import ActiveUsers from '@/components/ActiveUsers';
 import CostsCard from '@/components/CostsCard';
 import QuotaionsBars from '@/components/QuotationsBars';
+import TopEmployeesList from '@/components/ToEmployeesList';
 import TotalUserCard from '@/components/UsersCard';
 import { useQuotationFetch } from '@/queries/useQuotations';
 import { Box, Flex } from '@chakra-ui/react';
@@ -23,7 +23,7 @@ const DashboardLayout = () => {
         gap="7"
       >
         <QuotaionsBars quotationData={quotationData} />
-        <ActiveUsers />
+        <TopEmployeesList />
       </Box>
     </Flex>
   );

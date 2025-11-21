@@ -17,11 +17,12 @@ import Link from './ui/Link';
 const taskCountColor = (count: number) => {
   if (count >= 6) return 'green.300';
   else if (count >= 5) return 'purple.300';
-  else if (count > 3) return 'red.300';
-  else return 'blue.300';
+  else if (count > 3) return 'blue.300';
+  else if (count > 2) return 'yellow.300';
+  else return 'red.300';
 };
 
-const ActiveUsers = () => {
+const TopEmployeesList = () => {
   const { data: tasks, isLoading: tasksLoading } = useTasksFetch();
   const { data: employees, isLoading: usersLoading } = useEmployeesFetch();
 
@@ -121,11 +122,11 @@ const ActiveUsers = () => {
           rounded={'full'}
           variant={'surface'}
         >
-          <Link to={'/app/employees'}>Show more..</Link>
+          <Link to={'/app/employees/top-employees'}>Show more..</Link>
         </Button>
       </Stack>
     </Stack>
   );
 };
 
-export default ActiveUsers;
+export default TopEmployeesList;
