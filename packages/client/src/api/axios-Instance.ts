@@ -9,8 +9,6 @@ const API = axios.create({
   },
 });
 
-console.log(import.meta.env.VITE_BASE_URL);
-
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('ct-token');
