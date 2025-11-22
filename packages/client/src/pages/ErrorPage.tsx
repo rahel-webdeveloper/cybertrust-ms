@@ -1,7 +1,7 @@
 import { Heading, Text, Button, VStack, Icon, Flex } from '@chakra-ui/react';
 import { RotateCw, Siren } from 'lucide-react';
 
-const ErrorPage = () => {
+const ErrorPage = ({ message }: { message?: string }) => {
   return (
     <Flex h="100vh" align="center" justify="center">
       <VStack gap="6" p="10" borderRadius="lg" textAlign="center" maxW="lg">
@@ -12,9 +12,15 @@ const ErrorPage = () => {
         </Heading>
 
         <Text fontSize="lg" fontWeight="400" color="gray.300">
-          It looks like your connection are limited, Check your network and try
+          It looks like your connection is limited. Check your network and try
           again.
         </Text>
+
+        {message && (
+          <Text fontSize="sm" fontWeight="500" color="red.400">
+            {message}
+          </Text>
+        )}
 
         <Button
           onClick={() => window.location.reload()}

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import API from '@/api/axios-Instance';
 import type { User } from '@/queries/useEmplyees';
@@ -7,6 +7,8 @@ import type { User } from '@/queries/useEmplyees';
 type AuthContextType = {
   user: User | null | undefined;
   isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
   logout: () => void;
 };
 
@@ -23,6 +25,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     data: user,
     isLoading,
     isError,
+    error,
   } = useQuery<User, Error>({
     queryKey: ['user'],
     queryFn: () => fetchUser(),
@@ -33,17 +36,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = useCallback(() => {
     localStorage.removeItem('ct-token');
-
     queryClient.setQueryData(['user'], null);
     queryClient.invalidateQueries();
   }, [queryClient]);
 
-  useEffect(() => {
-    if (isError && !isLoading) logout();
-  }, [isError, isLoading, logout]);
-
   return (
-    <AuthContext.Provider value={{ user, isLoading, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, isError, logout, error }}>
       {children}
     </AuthContext.Provider>
   );

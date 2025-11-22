@@ -4,8 +4,6 @@ import { Text } from '@chakra-ui/react';
 import SignupForm from './pages/auth/SignupForm';
 import AuthLayout from './pages/auth/AuthLayout';
 import LoginForm from './pages/auth/LoginForm';
-import { protectAppLoader } from './loaders/app-loader';
-import HydrationFallback from './components/HydrationFallback';
 import ErrorPage from './pages/ErrorPage';
 import NotFoundPage from './pages/NotFoundPage';
 import EmployeesLayout from './pages/employee/EmployeesLayout';
@@ -17,6 +15,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Navigate to={'auth/login'} />,
+    errorElement: <ErrorPage />,
   },
   {
     path: 'auth',
@@ -39,9 +38,6 @@ const router = createBrowserRouter([
   {
     path: 'app',
     element: <App />,
-    loader: protectAppLoader,
-    hydrateFallbackElement: <HydrationFallback />,
-    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -126,6 +122,7 @@ const router = createBrowserRouter([
 
   {
     path: '*',
+    errorElement: <ErrorPage />,
     element: <NotFoundPage />,
   },
 ]);

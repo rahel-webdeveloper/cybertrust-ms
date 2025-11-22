@@ -1,6 +1,6 @@
 import { Grid, Spinner } from '@chakra-ui/react';
 
-const HydrationFallback = () => {
+const Loader = () => {
   return (
     <Grid placeItems="center" h="dvh">
       <Spinner size="xl" textAlign="center" />
@@ -8,4 +8,4 @@ const HydrationFallback = () => {
   );
 };
 
-export default HydrationFallback;
+export default Loader;
