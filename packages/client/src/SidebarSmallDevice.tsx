@@ -1,12 +1,13 @@
 import { Flex, Icon } from '@chakra-ui/react';
 import { PanelRight } from 'lucide-react';
 import DrawerShell from './components/DrawerShell';
-import type { SidebarItemsAndStatus } from './components/AppHeader';
 
-const SidebarSmallDevice = ({
-  sidebarStatus,
-  sidebarItems,
-}: SidebarItemsAndStatus) => {
+import { useSideBarStore } from './store/sidebarStore';
+
+const SidebarSmallDevice = () => {
+  const setSidebarState = useSideBarStore((e) => e.setSidebarState);
+  const isSidebarState = useSideBarStore((state) => state.isSidebarOpen);
+
   return (
     <Flex>
       <Icon
@@ -14,11 +15,11 @@ const SidebarSmallDevice = ({
         cursor="pointer"
         _hover={{ opacity: 0.7 }}
         transition="opacity"
-        onClick={sidebarStatus}
+        onClick={() => setSidebarState(!isSidebarState)}
       >
         <PanelRight />
       </Icon>
-      <DrawerShell sidebarItems={sidebarItems} />
+      <DrawerShell />
     </Flex>
   );
 };

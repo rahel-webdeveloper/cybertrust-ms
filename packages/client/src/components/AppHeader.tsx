@@ -4,14 +4,8 @@ import ProfileAvatar from './ProfileAvatar';
 import SearchLabel from './SearchBar';
 import SidebarSmallDevice from '@/SidebarSmallDevice';
 import { Tooltip } from './ui/tooltip';
-import type { SidebarItemsType } from '@/App';
 
-export type SidebarItemsAndStatus = {
-  sidebarStatus?: () => void;
-  sidebarItems: SidebarItemsType[];
-};
-
-const AppHeader = ({ sidebarStatus, sidebarItems }: SidebarItemsAndStatus) => {
+const AppHeader = () => {
   return (
     <HStack
       justifyContent="space-between"
@@ -24,10 +18,7 @@ const AppHeader = ({ sidebarStatus, sidebarItems }: SidebarItemsAndStatus) => {
       zIndex={1}
       backdropFilter="blur(15px)"
     >
-      <SidebarSmallDevice
-        sidebarItems={sidebarItems}
-        sidebarStatus={sidebarStatus}
-      />
+      <SidebarSmallDevice />
       <SearchLabel />
       <HStack columnGap="4">
         <Tooltip

@@ -1,20 +1,16 @@
 import { Box, Stack, Text, VStack } from '@chakra-ui/react';
 import NavItem from './NavItem';
 import { sidebarNavBottom } from '@/data/nav-data';
-import type { SidebarItemsType } from '@/App';
 import { LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useSideBarStore } from '@/store/sidebarStore';
 
-type LargeSidebarProps = {
-  isSidebarOpen: boolean;
-  sidebarItems: SidebarItemsType[];
-};
-
-const SidebarLargeDevice = ({
-  isSidebarOpen,
-  sidebarItems,
-}: LargeSidebarProps) => {
+const SidebarLargeDevice = () => {
   const { logout } = useAuth();
+  const isSidebarOpen = useSideBarStore((state) => state.isSidebarOpen);
+  const filteredSidebarItems = useSideBarStore(
+    (sidebar) => sidebar.sideBarItems
+  );
 
   return (
     <VStack
@@ -57,7 +53,7 @@ const SidebarLargeDevice = ({
         </Text>
 
         <Stack rowGap={2} mt="8">
-          {sidebarItems.map((item) => (
+          {filteredSidebarItems.map((item) => (
             <NavItem
               key={item.name}
               navIcon={item.icon}

@@ -3,16 +3,15 @@ import { CloseButton, Drawer, Grid, Portal, Stack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import NavItem from './NavItem';
 import { LogOut, PanelRightIcon } from 'lucide-react';
-import type { SidebarItemsType } from '@/App';
 import { useAuth } from '@/context/AuthContext';
+import { useSideBarStore } from '@/store/sidebarStore';
 
-const DrawerShell = ({
-  sidebarItems,
-}: {
-  sidebarItems: SidebarItemsType[];
-}) => {
+const DrawerShell = () => {
   const ref = useRef<HTMLInputElement | null>(null);
   const { logout } = useAuth();
+  const filteredSidebarItems = useSideBarStore(
+    (sidebar) => sidebar.sideBarItems
+  );
 
   return (
     // We keep your working Ark UI structure:
@@ -37,7 +36,7 @@ const DrawerShell = ({
             <Drawer.Body>
               {/* Replaced generic p/Input with standard NavItems */}
               <Stack as="ul" ml={4} gap={2} mt="0">
-                {sidebarItems.map((item) => (
+                {filteredSidebarItems.map((item) => (
                   <NavItem
                     key={item.name}
                     navIcon={item.icon}

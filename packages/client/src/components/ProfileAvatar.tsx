@@ -8,7 +8,7 @@ const ProfileAvatar = ({ isActive = true }: { isActive?: boolean }) => {
   return (
     <Link to={'settings'}>
       <Avatar.Root shape="full" size="lg" cursor="pointer">
-        <Avatar.Fallback name={user!.name} />
+        <Avatar.Fallback name={user?.name} />
         <Avatar.Image src={''} />
         <Float placement="bottom-start" offsetX="2" offsetY="1">
           {isActive && (
