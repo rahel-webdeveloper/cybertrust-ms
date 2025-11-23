@@ -1,5 +1,6 @@
 import ActiveProjectsCard from '@/components/ActiveProjectsCard';
 import CostsCard from '@/components/CostsCard';
+import Loader from '@/components/Loader';
 import QuotaionsBars from '@/components/QuotationsBars';
 import TopEmployeesList from '@/components/ToEmployeesList';
 import TotalUserCard from '@/components/UsersCard';
@@ -9,7 +10,7 @@ import { Box, Flex } from '@chakra-ui/react';
 const DashboardLayout = () => {
   const { data: quotationData, isLoading, isRefetching } = useQuotation();
 
-  if (isRefetching || isLoading) return;
+  if (isRefetching || isLoading) return <Loader />;
 
   return (
     <Flex gap="4" wrap={'wrap'}>

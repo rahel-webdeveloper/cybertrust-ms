@@ -31,7 +31,7 @@ const NavItem = ({
         color: isActive ? '#e8e8ecff' : '',
       })}
       _hover={{ bg: 'gray.900', color: '#e8e8ecff' }}
-      _focus={{ outline: 'none' }}
+      _focus={{ outline: 'none', bg: 'gray.900', color: '#e8e8ecff' }}
       to={path}
       onClick={onClick}
     >

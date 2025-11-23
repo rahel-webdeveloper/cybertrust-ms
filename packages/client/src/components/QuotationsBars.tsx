@@ -40,12 +40,12 @@ const QuotaionsBars = ({ quotationData }) => {
           <XAxis
             axisLine={false}
             tickLine={false}
-            dataKey={chart.key('type')}
+            dataKey={chart.key('quotation')}
           />
           <YAxis
             axisLine={false}
             tickLine={false}
-            tickFormatter={(value: any) => `${value}K`}
+            tickFormatter={(value) => `${value}K`}
           />
           <Tooltip
             cursor={{ fill: chart.color('bg.muted') }}

@@ -1,15 +1,24 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import App from './App';
 import { Text } from '@chakra-ui/react';
-import SignupForm from './pages/auth/SignupForm';
+import App from './App';
 import AuthLayout from './pages/auth/AuthLayout';
-import LoginForm from './pages/auth/LoginForm';
 import ErrorPage from './pages/ErrorPage';
 import NotFoundPage from './pages/NotFoundPage';
-import EmployeesLayout from './pages/employee/EmployeesLayout';
-import EmployeesList from './pages/employee/EmployeesList';
-import DashboardLayout from './pages/dashboard/DashboardLayout';
-import TopEmployees from './pages/employee/TopEmployees';
+import React from 'react';
+
+// Lazy imports
+const SignupForm = React.lazy(() => import('./pages/auth/SignupForm'));
+const LoginForm = React.lazy(() => import('./pages/auth/LoginForm'));
+const EmployeesLayout = React.lazy(
+  () => import('./pages/employee/EmployeesLayout')
+);
+const EmployeesList = React.lazy(
+  () => import('./pages/employee/EmployeesList')
+);
+const DashboardLayout = React.lazy(
+  () => import('./pages/dashboard/DashboardLayout')
+);
+const TopEmployees = React.lazy(() => import('./pages/employee/TopEmployees'));
 
 const router = createBrowserRouter([
   {
@@ -20,110 +29,46 @@ const router = createBrowserRouter([
   {
     path: 'auth',
     element: <AuthLayout />,
+    errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <Navigate to="login" replace />,
-      },
-      {
-        path: 'login',
-        element: <LoginForm />,
-      },
-      {
-        path: 'signup',
-        element: <SignupForm />,
-      },
+      { index: true, element: <Navigate to="login" replace /> },
+      { path: 'login', element: <LoginForm /> },
+      { path: 'signup', element: <SignupForm /> },
     ],
   },
   {
     path: 'app',
     element: <App />,
     children: [
-      {
-        index: true,
-        element: <Navigate to="dashboard" replace />,
-      },
-      {
-        path: 'dashboard',
-        element: <DashboardLayout />,
-      },
+      { index: true, element: <Navigate to="dashboard" replace /> },
+      { path: 'dashboard', element: <DashboardLayout /> },
       {
         path: 'employees',
         element: <EmployeesLayout />,
         children: [
-          {
-            index: true,
-            element: <EmployeesList />,
-          },
-          {
-            path: 'top-employees',
-            element: <TopEmployees />,
-          },
+          { index: true, element: <EmployeesList /> },
+          { path: 'top-employees', element: <TopEmployees /> },
         ],
       },
       {
         path: 'team',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            All Teams for admin
-          </Text>
-        ),
+        element: <Text fontSize="2xl">All Teams for admin</Text>,
       },
       {
         path: 'projects',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            All Project for admin
-          </Text>
-        ),
+        element: <Text fontSize="2xl">All Projects for admin</Text>,
       },
-      {
-        path: 'tasks',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            Project Tasks
-          </Text>
-        ),
-      },
+      { path: 'tasks', element: <Text fontSize="2xl">Project Tasks</Text> },
       {
         path: 'quotations',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            Project Quotations
-          </Text>
-        ),
+        element: <Text fontSize="2xl">Project Quotations</Text>,
       },
-      {
-        path: 'costs',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            Projects costs
-          </Text>
-        ),
-      },
-      {
-        path: 'settings',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            App Settings
-          </Text>
-        ),
-      },
-      {
-        path: 'about',
-        element: (
-          <Text fontSize="2xl" textAlign="center" pt="10">
-            About page
-          </Text>
-        ),
-      },
+      { path: 'costs', element: <Text fontSize="2xl">Projects costs</Text> },
+      { path: 'settings', element: <Text fontSize="2xl">App Settings</Text> },
+      { path: 'about', element: <Text fontSize="2xl">About page</Text> },
     ],
   },
-
-  {
-    path: '*',
-    errorElement: <ErrorPage />,
-    element: <NotFoundPage />,
-  },
+  { path: '*', errorElement: <ErrorPage />, element: <NotFoundPage /> },
 ]);
+
 export default router;
