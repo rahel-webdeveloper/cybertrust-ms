@@ -1,10 +1,10 @@
-import { useUserFetch } from '@/queries/useUsers';
+import { useUser } from '@/queries/users';
 import { Badge, Box, FormatNumber, Icon, Stat, Text } from '@chakra-ui/react';
 import { ArrowUpCircle, UserCheck } from 'lucide-react';
 import DashboardCardSkeleton from './DashboardCardSkeleton';
 
 const TotalUserCard = () => {
-  const { data, isLoading, isRefetching } = useUserFetch();
+  const { data, isLoading, isRefetching } = useUser();
 
   if (isLoading || isRefetching) return <DashboardCardSkeleton />;
 

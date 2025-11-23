@@ -20,4 +20,6 @@ employeesRoutes.delete('/:id', (req: Request, res: Response) => {
   res.send(`Delete employee with ID ${req.params.id}`);
 });
 
+employeesRoutes.get('/top/employees', employeesController.getTopEmployees);
+
 export default employeesRoutes;

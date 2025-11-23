@@ -1,5 +1,5 @@
 // @/store/useTableSelectionStore.ts
-import type { EmployeeDataResponse } from '@/queries/useEmplyees';
+import type { EmployeeDataResponse } from '@/queries/employees';
 import { create } from 'zustand';
 
 // Adjust interface to match your data structure if necessary, or keep it generic

@@ -1,38 +1,25 @@
 import TopEmployeeCard from '@/components/TopEmployeeCard';
-import { useEmployeesFetch, type User } from '@/queries/useEmplyees';
-import { useTasksFetch } from '@/queries/useTasks';
-import { Box, Spinner, Heading, Stack } from '@chakra-ui/react';
+import { useTopEmployee } from '@/queries/employees';
+import { Box, Heading, Spinner, Stack } from '@chakra-ui/react';
 
-// or
-type TaskCountMap = {
-  [userId: string]: number;
-};
-
-type TopEmployee = User & {
+export type TopEmployeeType = {
+  department: string;
+  email: string;
+  employeeId: string;
+  hireDate: string;
+  name: string;
+  phone: string;
+  position: string;
+  avatarUrl: string;
+  role: string;
+  salary: number;
   taskCount: number;
 };
 
 const TopEmployees = () => {
-  const { data: tasks, isLoading: tasksLoading } = useTasksFetch();
-  const { data: employees, isLoading: usersLoading } = useEmployeesFetch();
+  const { data: topEmployeeData, isLoading, isRefetching } = useTopEmployee();
 
-  if (tasksLoading || usersLoading) return <Spinner size={'lg'} />;
-
-  const taskCount: TaskCountMap = tasks.data.reduce(
-    (acc: TaskCountMap, task) => {
-      acc[task.assigned[0]] = (acc[task.assigned] || 0) + 1;
-      return acc;
-    },
-    {} as TaskCountMap
-  );
-
-  const topEmployees: TopEmployee[] = Object.entries(taskCount)
-    .sort((a, b) => b[1] - a[1])
-    .map(([userId, count]) => {
-      const user = employees.data.find((user: User) => user._id === userId);
-
-      return { ...user, taskCount: count };
-    });
+  if (isLoading || isRefetching) return <Spinner size={'lg'} />;
 
   return (
     <Box>
@@ -47,7 +34,7 @@ const TopEmployees = () => {
         justifyContent={'space-evenly'}
         gridTemplateColumns={{ md: '1fr 1fr ', lg: '1fr 1fr 1fr' }}
       >
-        {topEmployees.map((employee, idx) => (
+        {topEmployeeData.data.map((employee: TopEmployeeType, idx: number) => (
           <TopEmployeeCard key={idx} employee={employee} />
         ))}
       </Stack>

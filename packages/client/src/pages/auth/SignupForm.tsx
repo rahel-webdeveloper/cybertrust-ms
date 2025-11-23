@@ -2,7 +2,7 @@ import cyberTrustImg from '@/assets/ct-logo.webp';
 import dashboardImg from '@/assets/dashboard.jpg';
 import ShowPassword from '@/components/ShowPassword';
 import Link from '@/components/ui/Link';
-import { useSignup } from '@/queries/useSignup';
+import { useSignup } from '@/queries/signup';
 import {
   Box,
   Button,

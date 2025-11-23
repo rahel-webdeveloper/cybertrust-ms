@@ -1,4 +1,4 @@
-import { useCostsFetch } from '@/queries/useCosts';
+import { useCosts } from '@/queries/costs';
 import { Badge, Box, FormatNumber, Icon, Stat, Text } from '@chakra-ui/react';
 import { ArrowDownCircle, Wallet } from 'lucide-react';
 import DashboardCardSkeleton from './DashboardCardSkeleton';
@@ -10,7 +10,7 @@ type Cost = {
 };
 
 const CostsCard = () => {
-  const { data: projectCosts, isLoading, isRefetching } = useCostsFetch();
+  const { data: projectCosts, isLoading, isRefetching } = useCosts();
 
   if (isLoading || isRefetching) return <DashboardCardSkeleton />;
 

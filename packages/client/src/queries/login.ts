@@ -2,9 +2,8 @@ import API from '@/api/axios-Instance';
 import { toaster } from '@/components/ui/toaster';
 import type { LoginFormData } from '@/pages/auth/LoginForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { AuthAPIErrorType } from './useSignup';
-import type { User } from './useEmplyeesList';
-
+import type { User } from './emplyees';
+import type { AuthAPIErrorType } from './signup';
 type LoginResponseType = {
   token: string;
   user: User;

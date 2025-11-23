@@ -1,4 +1,4 @@
-import API from '@/api/axios-Instance';
+import { fetchEmployees, fetchTopEmployees } from '@/services/employeeService';
 import { useQuery } from '@tanstack/react-query';
 
 export type Profile = {
@@ -40,10 +40,16 @@ export interface EmployeeDataResponse {
 }
 
 // type GetEmployeesResponse
-
-export const useEmployeesFetch = () => {
+export const useEmployee = () => {
   return useQuery({
     queryKey: ['employees-list'],
-    queryFn: () => API.get('api/employees').then((res) => res.data),
+    queryFn: fetchEmployees,
+  });
+};
+
+export const useTopEmployee = () => {
+  return useQuery({
+    queryKey: ['top-employees'],
+    queryFn: fetchTopEmployees,
   });
 };

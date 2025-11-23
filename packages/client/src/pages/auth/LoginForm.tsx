@@ -19,7 +19,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, useNavigate } from 'react-router-dom';
 import z from 'zod';
-import { useLogin } from '@/queries/useLogin';
+import { useLogin } from '@/queries/login';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email'),

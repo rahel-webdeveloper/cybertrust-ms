@@ -1,5 +1,5 @@
-import { useEmployeesFetch } from '@/queries/useEmplyees';
-import { useTableSelectionStore } from '@/store/useTableSelectionStore';
+import { useEmployee } from '@/queries/employees';
+import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Avatar, Badge, Checkbox, Spinner, Table } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
@@ -9,12 +9,7 @@ const TableRows = () => {
   const setItems = useTableSelectionStore((state) => state.setItems);
   const items = useTableSelectionStore((state) => state.items);
 
-  const {
-    data: employeesData,
-    isRefetching,
-    isLoading,
-    error,
-  } = useEmployeesFetch();
+  const { data: employeesData, isRefetching, isLoading, error } = useEmployee();
 
   useEffect(() => {
     if (employeesData?.data) setItems(employeesData.data);

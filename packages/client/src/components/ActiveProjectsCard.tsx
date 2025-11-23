@@ -1,4 +1,4 @@
-import { useProjectFetch } from '@/queries/useProjects';
+import { useProject } from '@/queries/projects';
 import { Badge, Box, FormatNumber, Icon, Stat, Text } from '@chakra-ui/react';
 import { ArrowUpCircle, Footprints } from 'lucide-react';
 import DashboardCardSkeleton from './DashboardCardSkeleton';
@@ -22,7 +22,7 @@ type ProjectStatusOBJ = {
 };
 
 const ActiveProjectsCard = () => {
-  const { data: projects, isLoading, isRefetching } = useProjectFetch();
+  const { data: projects, isLoading, isRefetching } = useProject();
 
   if (isLoading || isRefetching) return <DashboardCardSkeleton />;
 

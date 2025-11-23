@@ -3,11 +3,11 @@ import CostsCard from '@/components/CostsCard';
 import QuotaionsBars from '@/components/QuotationsBars';
 import TopEmployeesList from '@/components/ToEmployeesList';
 import TotalUserCard from '@/components/UsersCard';
-import { useQuotationFetch } from '@/queries/useQuotations';
+import { useQuotation } from '@/queries/quotations';
 import { Box, Flex } from '@chakra-ui/react';
 
 const DashboardLayout = () => {
-  const { data: quotationData, isLoading, isRefetching } = useQuotationFetch();
+  const { data: quotationData, isLoading, isRefetching } = useQuotation();
 
   if (isRefetching || isLoading) return;
 

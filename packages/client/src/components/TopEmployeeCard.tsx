@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { TopEmployeeType } from '@/pages/employee/TopEmployees';
 import {
   Avatar,
   Badge,
@@ -22,19 +22,23 @@ const taskCountColor = (count: number) => {
   else return 'red.300';
 };
 
-const TopEmployeeCard = ({ employee }: any) => {
+interface TopEmployeeCardProps {
+  employee: TopEmployeeType;
+}
+
+const TopEmployeeCard = ({ employee }: TopEmployeeCardProps) => {
   return (
     <Card.Root width="325px" rounded={'2xl'}>
       <Card.Body p={'3'}>
         <HStack justify={'space-between'} p={3}>
           <VStack mb="6" gap="3">
             <Avatar.Root size={'2xl'}>
-              <Avatar.Image src={employee.user.profile.avatarUrl} />
+              <Avatar.Image src={employee.avatarUrl} />
               <Avatar.Fallback name="Nate Foss" />
             </Avatar.Root>
             <Stack gap="0">
               <Text fontWeight="semibold" textStyle="sm">
-                {employee.user.name.slice(0, 17)}
+                {employee.name.slice(0, 17)}
               </Text>
               <Text color="fg.muted" textStyle="sm">
                 @{employee.position}
@@ -88,11 +92,11 @@ const TopEmployeeCard = ({ employee }: any) => {
           <Stack mt={'10'}>
             <Strong color={'fg'} fontWeight={'500'} fontSize={15}>
               <Icon as={Mail} mr={3} size={'sm'} />
-              {employee.user.email}
+              {employee.email}
             </Strong>
             <Strong color={'fg'} fontWeight={'500'} fontSize={15}>
               <Icon as={PhoneCall} mr={3} size={'sm'} />
-              {employee.user.profile.phone}
+              {employee.phone}
             </Strong>
           </Stack>
         </Card.Description>

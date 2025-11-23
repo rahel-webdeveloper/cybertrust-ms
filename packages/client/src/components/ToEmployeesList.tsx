@@ -1,5 +1,5 @@
-import { useEmployeesFetch } from '@/queries/useEmplyees';
-import { useTasksFetch } from '@/queries/useTasks';
+import type { TopEmployeeType } from '@/pages/employee/TopEmployees';
+import { useTopEmployee } from '@/queries/employees';
 import {
   Avatar,
   Badge,
@@ -8,6 +8,7 @@ import {
   Flex,
   HStack,
   Icon,
+  Loader,
   Stack,
   Text,
 } from '@chakra-ui/react';
@@ -23,23 +24,9 @@ const taskCountColor = (count: number) => {
 };
 
 const TopEmployeesList = () => {
-  const { data: tasks, isLoading: tasksLoading } = useTasksFetch();
-  const { data: employees, isLoading: usersLoading } = useEmployeesFetch();
+  const { data: topEmployees, isLoading, isRefetching } = useTopEmployee();
 
-  if (tasksLoading || usersLoading) return;
-
-  const taskCount: [number] = tasks.data.reduce((acc, task) => {
-    acc[task.assigned[0]] = (acc[task.assigned] || 0) + 1;
-    return acc;
-  }, {});
-
-  const topEmployees = Object.entries(taskCount)
-    .sort((a, b) => b[1] - a[1])
-    .map(([userId, count]) => {
-      const user = employees.data.find((user: User) => user._id === userId);
-
-      return { ...user, taskCount: count };
-    });
+  if (isLoading || isRefetching) return <Loader />;
 
   return (
     <Stack borderWidth="1px" borderRadius="xl" position={'relative'}>
@@ -58,21 +45,21 @@ const TopEmployeesList = () => {
         Top Active Employees
       </Text>
       <Box mx={'4'} mt={'0'} mb="10">
-        {topEmployees.slice(0, 5).map((employee) => (
-          <Box p={4} borderBottomWidth={'1px'} key={employee._id}>
+        {topEmployees.data.slice(0, 5).map((employee: TopEmployeeType) => (
+          <Box p={4} borderBottomWidth={'1px'} key={employee.name}>
             <Flex align="center" justify={'space-between'}>
               <Flex gap="2">
                 <Avatar.Root>
-                  <Avatar.Fallback name={employee.user.name} />
-                  <Avatar.Image src={employee.user.profile.avatarUrl} />
+                  <Avatar.Fallback name={employee.name} />
+                  <Avatar.Image src={employee.avatarUrl} />
                 </Avatar.Root>
 
                 <Box>
                   <Text fontWeight="medium" fontSize={'xs'}>
-                    {employee.user.name.slice(0, 12)}
+                    {employee.name.slice(0, 12)}
                   </Text>
                   <Text fontSize="xs" color="gray.500">
-                    {employee.user.email}
+                    {employee.email}
                   </Text>
                 </Box>
               </Flex>

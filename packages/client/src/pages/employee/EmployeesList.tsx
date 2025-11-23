@@ -1,8 +1,7 @@
-import EmployeesActionBar from '@/components/TableActionBar';
 import TableRows from '@/components/TableRows';
 import Link from '@/components/ui/Link';
 import { employeeColumns } from '@/data/table-data';
-import { useTableSelectionStore } from '@/store/useTableSelectionStore';
+import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Box, Button, Checkbox, Table } from '@chakra-ui/react';
 
 const EmployeesList = () => {
@@ -13,7 +12,7 @@ const EmployeesList = () => {
 
   return (
     <Box w="full" overflowX="auto" scrollbar="hidden">
-      <EmployeesActionBar />
+      {/* <EmployeesActionBar /> */}
 
       <Link to={'top-employees'} mb={5}>
         <Button variant={'subtle'} rounded={'2xl'} fontWeight={'semibold'}>
