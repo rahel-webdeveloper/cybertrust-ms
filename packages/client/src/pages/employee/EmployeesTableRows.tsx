@@ -1,9 +1,10 @@
+import EmployeesTableSkeleton from '@/components/EmployeesTableSkeleton';
 import { useEmployee } from '@/queries/employees';
 import { useTableSelectionStore } from '@/store/tableSelectionStore';
-import { Avatar, Badge, Checkbox, Spinner, Table } from '@chakra-ui/react';
+import { Avatar, Badge, Checkbox, Table, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
-const TableRows = () => {
+const EmployeesTableRows = () => {
   const selection = useTableSelectionStore((state) => state.selection);
   const toggleItem = useTableSelectionStore((state) => state.toggleItem);
   const setItems = useTableSelectionStore((state) => state.setItems);
@@ -15,10 +16,14 @@ const TableRows = () => {
     if (employeesData?.data) setItems(employeesData.data);
   }, [employeesData, setItems]);
 
-  if (isLoading || isRefetching)
-    return <Spinner mt="7" w=" full" borderWidth={'3px'} size="md" />;
+  if (isLoading || isRefetching) return <EmployeesTableSkeleton />;
 
-  if (error) return;
+  if (error)
+    return (
+      <Text color={'fg.error'} position={'absolute'} fontSize={'md'} p="4">
+        Faild to fetch employees
+      </Text>
+    );
 
   return (
     <>
@@ -77,4 +82,4 @@ const TableRows = () => {
   );
 };
 
-export default TableRows;
+export default EmployeesTableRows;

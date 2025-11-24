@@ -13,12 +13,14 @@ const EmployeesLayout = React.lazy(
   () => import('./pages/employee/EmployeesLayout')
 );
 const EmployeesList = React.lazy(
-  () => import('./pages/employee/EmployeesList')
+  () => import('./pages/employee/EmployeesTable')
 );
 const DashboardLayout = React.lazy(
   () => import('./pages/dashboard/DashboardLayout')
 );
-const TopEmployees = React.lazy(() => import('./pages/employee/TopEmployees'));
+const TopEmployees = React.lazy(
+  () => import('./pages/employee/TopEmployeesCards')
+);
 
 const router = createBrowserRouter([
   {

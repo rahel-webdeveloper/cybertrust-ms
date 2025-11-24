@@ -39,7 +39,6 @@ export interface EmployeeDataResponse {
   };
 }
 
-// type GetEmployeesResponse
 export const useEmployee = () => {
   return useQuery({
     queryKey: ['employees-list'],

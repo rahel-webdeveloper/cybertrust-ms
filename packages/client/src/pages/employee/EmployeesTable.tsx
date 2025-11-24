@@ -1,10 +1,10 @@
-import TableRows from '@/components/TableRows';
 import Link from '@/components/ui/Link';
 import { employeeColumns } from '@/data/table-data';
 import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Box, Button, Checkbox, Table } from '@chakra-ui/react';
+import EmployeesTableRows from './EmployeesTableRows';
 
-const EmployeesList = () => {
+const EmployeesTable = () => {
   const items = useTableSelectionStore((state) => state.items);
   const selection = useTableSelectionStore((state) => state.selection);
   const toggleAll = useTableSelectionStore((state) => state.toggleAll);
@@ -12,8 +12,6 @@ const EmployeesList = () => {
 
   return (
     <Box w="full" overflowX="auto" scrollbar="hidden">
-      {/* <EmployeesActionBar /> */}
-
       <Link to={'top-employees'} mb={5}>
         <Button variant={'subtle'} rounded={'2xl'} fontWeight={'semibold'}>
           Find Top Employees
@@ -42,11 +40,11 @@ const EmployeesList = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          <TableRows />
+          <EmployeesTableRows />
         </Table.Body>
       </Table.Root>
     </Box>
   );
 };
 
-export default EmployeesList;
+export default EmployeesTable;
