@@ -16,7 +16,7 @@ export type TopEmployeeType = {
   taskCount: number;
 };
 
-const TopEmployees = () => {
+const TopEmployeesCardsDiv = () => {
   const { data: topEmployeeData, isLoading, isRefetching } = useTopEmployee();
 
   if (isLoading || isRefetching) return <Spinner size={'lg'} />;
@@ -42,4 +42,4 @@ const TopEmployees = () => {
   );
 };
 
-export default TopEmployees;
+export default TopEmployeesCardsDiv;

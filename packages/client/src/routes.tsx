@@ -1,27 +1,16 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Text } from '@chakra-ui/react';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from './App';
+import Loader from './components/Loader';
 import AuthLayout from './pages/auth/AuthLayout';
+import LoginForm from './pages/auth/LoginForm';
+import SignupForm from './pages/auth/SignupForm';
+import DashboardLayout from './pages/dashboard/DashboardLayout';
+import EmployeesLayout from './pages/employee/EmployeesLayout';
+import EmployeesTable from './pages/employee/EmployeesTable';
+import TopEmployeesCardsDiv from './pages/employee/TopEmployeesCards';
 import ErrorPage from './pages/ErrorPage';
 import NotFoundPage from './pages/NotFoundPage';
-import React from 'react';
-import Loader from './components/Loader';
-
-// Lazy imports
-const SignupForm = React.lazy(() => import('./pages/auth/SignupForm'));
-const LoginForm = React.lazy(() => import('./pages/auth/LoginForm'));
-const EmployeesLayout = React.lazy(
-  () => import('./pages/employee/EmployeesLayout')
-);
-const EmployeesList = React.lazy(
-  () => import('./pages/employee/EmployeesTable')
-);
-const DashboardLayout = React.lazy(
-  () => import('./pages/dashboard/DashboardLayout')
-);
-const TopEmployees = React.lazy(
-  () => import('./pages/employee/TopEmployeesCards')
-);
 
 const router = createBrowserRouter([
   {
@@ -51,8 +40,8 @@ const router = createBrowserRouter([
         path: 'employees',
         element: <EmployeesLayout />,
         children: [
-          { index: true, element: <EmployeesList /> },
-          { path: 'top-employees', element: <TopEmployees /> },
+          { index: true, element: <EmployeesTable /> },
+          { path: 'top-employees', element: <TopEmployeesCardsDiv /> },
         ],
       },
       {
