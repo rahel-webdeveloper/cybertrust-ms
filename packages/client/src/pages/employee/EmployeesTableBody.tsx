@@ -4,7 +4,7 @@ import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Avatar, Badge, Checkbox, Table, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
-const EmployeesTableRows = () => {
+const EmployeesTableBody = () => {
   const selection = useTableSelectionStore((state) => state.selection);
   const toggleItem = useTableSelectionStore((state) => state.toggleItem);
   const setItems = useTableSelectionStore((state) => state.setItems);
@@ -26,7 +26,7 @@ const EmployeesTableRows = () => {
     );
 
   return (
-    <>
+    <Table.Body>
       {items.map((item, idx: number) => (
         <Table.Row
           key={idx}
@@ -78,8 +78,8 @@ const EmployeesTableRows = () => {
           </Table.Cell>
         </Table.Row>
       ))}
-    </>
+    </Table.Body>
   );
 };
 
-export default EmployeesTableRows;
+export default EmployeesTableBody;

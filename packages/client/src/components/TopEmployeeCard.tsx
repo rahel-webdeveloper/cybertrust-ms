@@ -1,4 +1,4 @@
-import type { TopEmployeeType } from '@/pages/employee/TopEmployees';
+import type { TopEmployeeType } from '@/pages/employee/TopEmployeesCards';
 import {
   Avatar,
   Badge,

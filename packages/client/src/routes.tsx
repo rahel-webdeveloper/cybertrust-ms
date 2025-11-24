@@ -5,6 +5,7 @@ import AuthLayout from './pages/auth/AuthLayout';
 import ErrorPage from './pages/ErrorPage';
 import NotFoundPage from './pages/NotFoundPage';
 import React from 'react';
+import Loader from './components/Loader';
 
 // Lazy imports
 const SignupForm = React.lazy(() => import('./pages/auth/SignupForm'));
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
     path: 'app',
     element: <App />,
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <Loader />,
     children: [
       { index: true, element: <Navigate to="dashboard" replace /> },
       { path: 'dashboard', element: <DashboardLayout /> },

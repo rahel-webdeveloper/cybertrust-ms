@@ -29,10 +29,8 @@ function App() {
   return (
     <Flex h="dvh" overflowX="auto">
       <SidebarLargeDevice />
-
       <Grid flex="1" templateRows="auto 1fr">
         <AppHeader />
-
         <Box flex="1" p={4}>
           <Outlet />
         </Box>

@@ -3,7 +3,7 @@ import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Button, Icon, HStack, IconButton, Flex } from '@chakra-ui/react';
 import { Filter, Minus, Plus, RefreshCcw, SortAsc } from 'lucide-react';
 
-const EmployeesActionBar = () => {
+const EmployeesTableActionBar = () => {
   const selection = useTableSelectionStore((state) => state.selection);
   const { refetch } = useEmployee();
 
@@ -42,4 +42,4 @@ const EmployeesActionBar = () => {
   );
 };
 
-export default EmployeesActionBar;
+export default EmployeesTableActionBar;

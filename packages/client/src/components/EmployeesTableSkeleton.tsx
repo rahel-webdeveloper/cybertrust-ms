@@ -3,7 +3,7 @@ import { Avatar, Box, Skeleton, Table } from '@chakra-ui/react';
 const EmployeesTableSkeleton = () => {
   return (
     <Box position={'absolute'}>
-      {Array.from({ length: 7 }).map(() => (
+      {Array.from({ length: 5 }).map(() => (
         <Table.Row
           display="flex"
           alignItems="center"

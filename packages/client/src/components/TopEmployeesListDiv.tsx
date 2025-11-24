@@ -26,9 +26,11 @@ const TopEmployeesListDiv = () => {
         Top Active Employees
       </Text>
       <Box mx={'4'} mt={'0'} mb="10">
-        {topEmployees.data.slice(0, 5).map((employee: TopEmployeeType) => (
-          <TopEmployeesList employee={employee} />
-        ))}
+        {topEmployees.data
+          .slice(0, 5)
+          .map((employee: TopEmployeeType, idx: number) => (
+            <TopEmployeesList key={idx} employee={employee} />
+          ))}
       </Box>
       <Stack
         position={'absolute'}
