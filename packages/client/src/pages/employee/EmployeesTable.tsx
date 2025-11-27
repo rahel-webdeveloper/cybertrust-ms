@@ -1,24 +1,40 @@
 import Link from '@/components/ui/Link';
 import { employeeColumns } from '@/data/table-data';
 import { useTableSelectionStore } from '@/store/tableSelectionStore';
-import { Box, Button, Checkbox, Table } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Button,
+  Checkbox,
+  HStack,
+  Table,
+  Text,
+} from '@chakra-ui/react';
 import EmployeesTableBody from './EmployeesTableBody';
 import EmployeesTableActionBar from '@/components/TableActionBar';
 
 const EmployeesTable = () => {
   const items = useTableSelectionStore((state) => state.items);
-  const selection = useTableSelectionStore((state) => state.selection);
+  const selection = useTableSelectionStore((state) => state.selectedUsers);
   const toggleAll = useTableSelectionStore((state) => state.toggleAll);
   const indeterminate = selection.length > 0 && selection.length < items.length;
 
   return (
     <Box w="full" overflowX="auto" scrollbar="hidden">
       <EmployeesTableActionBar />
-      <Link to={'top-employees'} mb={5}>
-        <Button variant={'subtle'} rounded={'2xl'} fontWeight={'semibold'}>
-          Find Top Employees
-        </Button>
-      </Link>
+      <HStack justify="space-between" alignItems={'center'}>
+        <Link to={'top-employees'} mb={5}>
+          <Button variant={'subtle'} rounded={'2xl'} fontWeight={'semibold'}>
+            Find Top Employees
+          </Button>
+        </Link>
+        <Text fontWeight={'semibold'}>
+          Total Employees/Admin
+          <Badge rounded="full" variant="subtle" size={'lg'} ml={'2'}>
+            {items.length}
+          </Badge>
+        </Text>
+      </HStack>
       <Table.Root maxW="dvw" overflowY={'auto'}>
         <Table.Header>
           <Table.Row>

@@ -5,7 +5,7 @@ import { Avatar, Badge, Checkbox, Table, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 const EmployeesTableBody = () => {
-  const selection = useTableSelectionStore((state) => state.selection);
+  const selection = useTableSelectionStore((state) => state.selectedUsers);
   const toggleItem = useTableSelectionStore((state) => state.toggleItem);
   const setItems = useTableSelectionStore((state) => state.setItems);
   const items = useTableSelectionStore((state) => state.items);

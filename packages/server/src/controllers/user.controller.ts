@@ -2,6 +2,8 @@ import { faker } from '@faker-js/faker';
 import type { Request, Response } from 'express';
 import User from '../models/user.model';
 import Employee from '../models/employee.model';
+import Task from '../models/task.model';
+import Project from '../models/project.model';
 
 type AddUserFormData = {
   name: string;
@@ -56,12 +58,71 @@ export const userController = {
 
       res.status(200).json({
         success: true,
-        message: 'New user created success full',
+        message: 'New user created successfully',
         newUser: user,
         newEmployee: employee,
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      res
+        .status(500)
+        .json({ success: false, message: 'Server error', error: err });
+      console.log(err);
+    }
+  },
+
+  async deleteUser(req: Request, res: Response) {
+    try {
+      const { userEmail } = req.params;
+
+      if (!userEmail) {
+        res
+          .status(400)
+          .json({ success: false, message: 'Please enter valid email' });
+        return;
+      }
+
+      const user = await User.findOne({ email: userEmail });
+      if (!user) {
+        res.status(404).json({
+          success: false,
+          message: `User not found with the email of (${userEmail})`,
+        });
+        return;
+      }
+
+      await Employee.deleteOne({
+        user: user._id,
+      });
+
+      await Project.updateMany(
+        {
+          team: user._id,
+        },
+        {
+          $pull: { team: user._id },
+        }
+      );
+
+      await Task.updateMany(
+        {
+          assigned: user._id,
+        },
+        {
+          $pull: { assigned: user._id },
+        }
+      );
+
+      await User.deleteOne({ _id: user._id });
+
+      res.status(200).json({
+        success: true,
+        message: 'User deleted successfully',
+      });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ success: false, message: 'Server error', error: err });
+      console.log(err);
     }
   },
 };

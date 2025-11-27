@@ -20,8 +20,6 @@ userRoutes.put('/:id', (req: Request, res: Response) => {
   res.send(`Update user with ID ${req.params.id}`);
 });
 
-userRoutes.delete('/:id', (req: Request, res: Response) => {
-  res.send(`Delete user with ID ${req.params.id}`);
-});
+userRoutes.delete('/:userEmail', userController.deleteUser);
 
 export default userRoutes;

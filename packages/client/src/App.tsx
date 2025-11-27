@@ -5,7 +5,7 @@ import Loader from './components/Loader';
 import { useEffect } from 'react';
 import SidebarLargeDevice from './components/SidebarLargeDevice';
 import AppHeader from './components/AppHeader';
-import ErrorPage from './pages/ErrorPage';
+// import ErrorPage from './pages/ErrorPage';
 import { useSideBarStore } from './store/sidebarStore';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
 
   if (isLoading) return <Loader />;
 
-  if (isError) return <ErrorPage />;
+  // if (isError) return <ErrorPage />;
 
   if (user) filterSidebar(user.role);
 

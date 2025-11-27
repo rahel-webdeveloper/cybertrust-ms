@@ -16,3 +16,11 @@ export const useAddUser = () => {
       API.post('api/users', newUserData).then((res) => res.data),
   });
 };
+
+export const useDeleteUser = () => {
+  return useMutation({
+    mutationKey: ['users'],
+    mutationFn: (userEmail: string) =>
+      API.delete(`/api/users/${userEmail}`).then((res) => res.data),
+  });
+};

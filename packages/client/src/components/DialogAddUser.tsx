@@ -4,7 +4,7 @@ import { useState } from 'react';
 import AddUserForm from './AddUserForm';
 import PositionSelect from './PositionSelect';
 
-const DialogAddUser = ({ isUserSelected }) => {
+const DialogAddUser = ({ isUserSelected, isUserAdmin }) => {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState('');
 
@@ -17,7 +17,11 @@ const DialogAddUser = ({ isUserSelected }) => {
       size={{ base: 'sm', md: 'lg' }}
     >
       <Dialog.Trigger asChild>
-        <Button variant="subtle" rounded="full" disabled={isUserSelected}>
+        <Button
+          variant="surface"
+          rounded="full"
+          disabled={isUserSelected || isUserAdmin}
+        >
           <Icon as={Plus} />
         </Button>
       </Dialog.Trigger>
