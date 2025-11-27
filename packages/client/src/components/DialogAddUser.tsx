@@ -7,6 +7,7 @@ import PositionSelect from './PositionSelect';
 const DialogAddUser = ({ isUserSelected }) => {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState('');
+
   return (
     <Dialog.Root
       placement={'center'}
@@ -21,10 +22,11 @@ const DialogAddUser = ({ isUserSelected }) => {
         </Button>
       </Dialog.Trigger>
       <Portal>
-        <Dialog.Backdrop />
+        <Dialog.Backdrop backdropFilter={'blur(3px)'} />
         <Dialog.Positioner>
           <Dialog.Content
             backdropFilter={'blur(15px)'}
+            rounded={'2xl'}
             bgColor={'transparent'}
             w="xl"
           >

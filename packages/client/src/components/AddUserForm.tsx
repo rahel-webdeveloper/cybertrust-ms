@@ -1,3 +1,4 @@
+import { useAddUser } from '@/queries/users';
 import {
   Button,
   Field,
@@ -15,28 +16,21 @@ import { useState, type ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form } from 'react-router-dom';
 import z from 'zod';
+import { toaster } from './ui/toaster';
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const addUserSchema = z.object({
+const addUserSchema = z.object({
   name: z
     .string()
     .min(1, 'Name is required')
     .max(100, 'Name must be less than 100 characters'),
-
   email: z.string().email('Invalid email address'),
-
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-
-  roles: z.array(z.string()).nonempty('At least one role is required'),
-
-  position: z.string().min(1, 'Position is required'),
-
+  role: z.string().optional(),
+  position: z.string().optional(),
   department: z.string().min(1, 'Department is required'),
-
-  salary: z.number().positive('Salary must be a positive number'),
+  salary: z.coerce.number().min(0, 'Salary must be positive or zero'),
 });
 
-type AddUserFormData = z.infer<typeof addUserSchema>;
+export type AddUserFormData = z.infer<typeof addUserSchema>;
 
 const roles = [
   { label: 'Admin', value: 'admin' },
@@ -54,27 +48,46 @@ const AddUserForm = ({
   const {
     register,
     handleSubmit,
-
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<AddUserFormData>({
     resolver: zodResolver(addUserSchema),
   });
-  const [value, setValue] = useState<string | null>(null);
 
-  console.log(positionValue);
+  const [roleValue, setRoleValue] = useState('developer');
+
+  const { mutate } = useAddUser();
 
   const onSubmit = (data: AddUserFormData) => {
-    console.log(data);
-    // mutate(data, {
-    //   onSuccess: () => {
-    //     navigate('/app');
-    //   },
-    // });
+    data.role = roleValue;
+    data.position = positionValue;
+
+    mutate(data, {
+      onSuccess: (data) => {
+        reset();
+        console.log(data);
+
+        toaster.create({
+          closable: true,
+          type: 'success',
+          title: 'Creating User Successed',
+          description: 'New user create successfully',
+        });
+      },
+      onError: (error) => {
+        toaster.create({
+          closable: true,
+          type: 'error',
+          title: 'Create User Faild',
+          description: `Something went wrong. Please try again later. ${error.message}`,
+        });
+      },
+    });
   };
   return (
-    <Fieldset.Root onSubmit={handleSubmit(onSubmit)}>
+    <Fieldset.Root>
       <Stack p={4} gap={2}>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack p={4} gap={6}>
             <HStack>
               <Field.Root
@@ -113,8 +126,8 @@ const AddUserForm = ({
               <Field.Root id="roles">
                 <Field.Label fontSize={'xs'}>Roles</Field.Label>
                 <RadioGroup.Root
-                  value={value || 'developer'}
-                  onValueChange={(e) => setValue(e.value)}
+                  value={roleValue || 'developer'}
+                  onValueChange={(e) => setRoleValue(e.value)}
                   size={'sm'}
                 >
                   <HStack flexWrap={'wrap'} gap="6">
@@ -124,9 +137,7 @@ const AddUserForm = ({
                         value={role.value}
                         defaultChecked={true}
                       >
-                        <RadioGroup.ItemHiddenInput
-                          onChange={(e) => console.log(e.target.value)}
-                        />
+                        <RadioGroup.ItemHiddenInput />
                         <RadioGroup.ItemIndicator />
                         <RadioGroup.ItemText fontSize={'xs'}>
                           {role.label}
@@ -145,18 +156,20 @@ const AddUserForm = ({
             </HStack>
 
             <HStack>
-              <Field.Root id="department">
+              <Field.Root id="department" invalid={Boolean(errors.department)}>
                 <Field.Label fontSize={'xs'}>Department</Field.Label>
                 <Input
                   {...register('department')}
                   rounded="full"
+                  type="text"
                   size="sm"
                   placeholder="IT / HR / Finance"
                 />
+                <Field.ErrorText>{errors.department?.message}</Field.ErrorText>
               </Field.Root>
 
               {/* Salary */}
-              <Field.Root id="salary">
+              <Field.Root id="salary" invalid={Boolean(errors.salary)}>
                 <Field.Label fontSize={'xs'}>Salary</Field.Label>
                 <InputGroup startElement="$" endElement="USD">
                   <Input
@@ -164,9 +177,10 @@ const AddUserForm = ({
                     rounded="full"
                     size="sm"
                     type="number"
-                    placeholder="50000"
+                    placeholder="0"
                   />
                 </InputGroup>
+                <Field.ErrorText>{errors.salary?.message}</Field.ErrorText>
               </Field.Root>
             </HStack>
 
@@ -177,7 +191,7 @@ const AddUserForm = ({
               w="min-content"
               position={'absolute'}
               bottom={'4'}
-              variant={'surface'}
+              variant={'solid'}
               py={'4'}
               colorPalette={'teal'}
               size="sm"

@@ -62,7 +62,9 @@ const EmployeesTableBody = () => {
             </Badge>
           </Table.Cell>
           <Table.Cell>{item.user.email}</Table.Cell>
-          <Table.Cell>{item.user.profile.country}</Table.Cell>
+          <Table.Cell>
+            {item.user.profile.country ?? 'Not Specified'}
+          </Table.Cell>
           <Table.Cell>
             <Badge
               rounded="full"

@@ -6,17 +6,12 @@ const positions = createListCollection({
     { label: 'Developer', value: 'developer' },
     { label: 'Designer', value: 'designer' },
     { label: 'Analyst', value: 'analyst' },
-    { label: 'Engineer', value: 'engineer' },
     { label: 'Specialist', value: 'specialist' },
     { label: 'Coordinator', value: 'coordinator' },
-    { label: 'Administrator', value: 'administrator' },
     { label: 'Associate', value: 'associate' },
     { label: 'Consultant', value: 'consultant' },
-    { label: 'Director', value: 'director' },
-    { label: 'Technician', value: 'technician' },
     { label: 'Supervisor', value: 'supervisor' },
     { label: 'Architect', value: 'architect' },
-    { label: 'Assistant', value: 'assistant' },
   ],
 });
 
