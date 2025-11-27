@@ -1,7 +1,8 @@
 import { useEmployee } from '@/queries/employees';
 import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Button, Icon, HStack, IconButton, Flex } from '@chakra-ui/react';
-import { Filter, Minus, Plus, RefreshCcw, SortAsc } from 'lucide-react';
+import { Filter, Minus, RefreshCcw, SortAsc } from 'lucide-react';
+import DialogAddUser from './DialogAddUser';
 
 const EmployeesTableActionBar = () => {
   const selection = useTableSelectionStore((state) => state.selection);
@@ -30,13 +31,7 @@ const EmployeesTableActionBar = () => {
         >
           <Icon as={Minus} />
         </Button>
-        <Button
-          variant="subtle"
-          rounded="full"
-          disabled={Boolean(selection.length)}
-        >
-          <Icon as={Plus} />
-        </Button>
+        <DialogAddUser isUserSelected={Boolean(selection.length)} />
       </Flex>
     </HStack>
   );
