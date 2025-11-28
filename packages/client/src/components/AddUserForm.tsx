@@ -51,13 +51,13 @@ const AddUserForm = ({
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<AddUserFormData>({
     resolver: zodResolver(addUserSchema) as Resolver<AddUserFormData>,
   });
 
   const [roleValue, setRoleValue] = useState<string>('developer');
-  const { mutate } = useAddUser();
+  const { mutate, isPending } = useAddUser();
 
   const onSubmit = (data: AddUserFormData) => {
     data.role = roleValue;
@@ -97,7 +97,7 @@ const AddUserForm = ({
               <Field.Root
                 id="name"
                 invalid={Boolean(errors.name)}
-                disabled={isSubmitting}
+                disabled={isPending}
               >
                 <Field.Label fontSize={'xs'}>Name</Field.Label>
                 <Input
@@ -112,7 +112,7 @@ const AddUserForm = ({
               <Field.Root
                 id="email"
                 invalid={Boolean(errors.email)}
-                disabled={isSubmitting}
+                disabled={isPending}
               >
                 <Field.Label fontSize={'xs'}>Email</Field.Label>
                 <Input
@@ -201,9 +201,9 @@ const AddUserForm = ({
               size="sm"
               mt="5"
               loadingText="Saving..."
-              loading={isSubmitting}
+              loading={isPending}
             >
-              {isSubmitting && <Spinner size="sm" mr={2} />}
+              {isPending && <Spinner size="sm" mr={2} />}
               Add User
             </Button>
           </Stack>
