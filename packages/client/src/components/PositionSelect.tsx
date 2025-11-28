@@ -20,6 +20,7 @@ const PositionSelect = ({ onPositionChange }) => {
     <Select.Root
       collection={positions}
       size="sm"
+      defaultValue={['architect']}
       onChange={(e) => onPositionChange(e.target.value)}
     >
       <Select.HiddenSelect />
@@ -33,9 +34,9 @@ const PositionSelect = ({ onPositionChange }) => {
       </Select.Control>
       <Select.Positioner>
         <Select.Content>
-          {positions.items.map((item) => (
-            <Select.Item item={item} key={item.value}>
-              {item.label}
+          {positions.items.map((position) => (
+            <Select.Item item={position} key={position.value}>
+              {position.label}
             </Select.Item>
           ))}
         </Select.Content>

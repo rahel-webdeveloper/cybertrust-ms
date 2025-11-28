@@ -1,5 +1,10 @@
 import cors from 'cors';
-import express, { type Request, type Response } from 'express';
+import express, {
+  type ErrorRequestHandler,
+  type NextFunction,
+  type Request,
+  type Response,
+} from 'express';
 import connectDb from './src/db/db-connection';
 import authRouter from './src/routes/auth.route';
 import costsRoutes from './src/routes/costs.route';
@@ -30,6 +35,13 @@ app.use('/api/tasks', tasksRoutes);
 app.use('/api/quotations', quotationsRoutes);
 app.use('/api/costs', costsRoutes);
 app.use('/seed', seedDataRoutes);
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error',
+  });
+});
 
 app.get('/', async (req: Request, res: Response) => {
   res.json({

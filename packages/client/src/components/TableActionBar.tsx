@@ -31,6 +31,7 @@ const EmployeesTableActionBar = () => {
           refetchEmployee={refetch}
         />
         <DialogAddUser
+          refetch={refetch}
           isUserSelected={Boolean(selectedUsers.length)}
           isUserAdmin={Boolean(user?.role !== 'admin')}
         />

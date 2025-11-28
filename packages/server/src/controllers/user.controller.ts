@@ -5,7 +5,7 @@ import Employee from '../models/employee.model';
 import Task from '../models/task.model';
 import Project from '../models/project.model';
 
-type AddUserFormData = {
+type AddUserData = {
   name: string;
   email: string;
   department: string;
@@ -14,7 +14,7 @@ type AddUserFormData = {
   position?: string | undefined;
 };
 
-const selectPassord = (role: string) => {
+const selectPassword = (role: string) => {
   if (role === 'admin') return Bun.env.ADMIN_PW;
   else if (role === 'manager') return 'manager123';
   else if (role === 'developer') return 'developer';
@@ -24,17 +24,24 @@ const selectPassord = (role: string) => {
 export const userController = {
   async addNewUser(req: Request, res: Response) {
     try {
-      const userData: AddUserFormData = req.body;
+      const userData: AddUserData = req.body;
       const fakeImage = faker.image.personPortrait({ sex: 'male', size: 512 });
-      const selectedPassword = selectPassord(userData.role);
 
       if (!userData) {
         res
           .status(400)
-          .json({ success: false, message: 'Please enter valid data' });
+          .json({ success: false, message: 'User data is required' });
         return;
       }
 
+      const userExist = await User.findOne({ email: userData.email });
+      if (userExist) {
+        const error = new Error('User with this email already exists');
+        error.statusCode = 409;
+        throw error;
+      }
+
+      const selectedPassword = selectPassword(userData.role);
       const user = await User.create({
         email: userData.email,
         name: userData.email,
@@ -62,10 +69,11 @@ export const userController = {
         newUser: user,
         newEmployee: employee,
       });
-    } catch (err) {
-      res
-        .status(500)
-        .json({ success: false, message: 'Server error', error: err });
+    } catch (err: any) {
+      res.status(err.statusCode || 500).json({
+        success: false,
+        message: err.message || 'Server error',
+      });
       console.log(err);
     }
   },

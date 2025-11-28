@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, type ReactNode } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type Resolver } from 'react-hook-form';
 import { Form } from 'react-router-dom';
 import z from 'zod';
 import { toaster } from './ui/toaster';
@@ -41,9 +41,11 @@ const roles = [
 const AddUserForm = ({
   positionValue,
   children,
+  refetchEmployees,
 }: {
   children: ReactNode;
   positionValue: string;
+  refetchEmployees: () => void;
 }) => {
   const {
     register,
@@ -51,11 +53,10 @@ const AddUserForm = ({
     reset,
     formState: { errors, isSubmitting },
   } = useForm<AddUserFormData>({
-    resolver: zodResolver(addUserSchema),
+    resolver: zodResolver(addUserSchema) as Resolver<AddUserFormData>,
   });
 
-  const [roleValue, setRoleValue] = useState('developer');
-
+  const [roleValue, setRoleValue] = useState<string>('developer');
   const { mutate } = useAddUser();
 
   const onSubmit = (data: AddUserFormData) => {
@@ -63,10 +64,9 @@ const AddUserForm = ({
     data.position = positionValue;
 
     mutate(data, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         reset();
-        console.log(data);
-
+        refetchEmployees();
         toaster.create({
           closable: true,
           type: 'success',
@@ -74,12 +74,16 @@ const AddUserForm = ({
           description: 'New user create successfully',
         });
       },
-      onError: (error) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onError: (error: any) => {
         toaster.create({
           closable: true,
           type: 'error',
           title: 'Create User Faild',
-          description: `Something went wrong. Please try again later. ${error.message}`,
+          description:
+            error.status === 409
+              ? 'User with this email already exist'
+              : `Something went wrong. Please try again later. ${error.message}`,
         });
       },
     });
@@ -127,7 +131,7 @@ const AddUserForm = ({
                 <Field.Label fontSize={'xs'}>Roles</Field.Label>
                 <RadioGroup.Root
                   value={roleValue || 'developer'}
-                  onValueChange={(e) => setRoleValue(e.value)}
+                  onValueChange={(e) => e.value && setRoleValue(e.value)}
                   size={'sm'}
                 >
                   <HStack flexWrap={'wrap'} gap="6">

@@ -4,7 +4,11 @@ import { useState } from 'react';
 import AddUserForm from './AddUserForm';
 import PositionSelect from './PositionSelect';
 
-const DialogAddUser = ({ isUserSelected, isUserAdmin }) => {
+const DialogAddUser = ({
+  isUserSelected,
+  isUserAdmin,
+  refetch: refetchEmployees,
+}) => {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState('');
 
@@ -38,7 +42,10 @@ const DialogAddUser = ({ isUserSelected, isUserAdmin }) => {
               <Dialog.Title>Dialog Title</Dialog.Title>
             </Dialog.Header>
             <Dialog.Body>
-              <AddUserForm positionValue={position}>
+              <AddUserForm
+                positionValue={position}
+                refetchEmployees={refetchEmployees}
+              >
                 <PositionSelect
                   onPositionChange={(position: string) => setPosition(position)}
                 />
