@@ -48,7 +48,7 @@ root/
 ## Quick start
 1. Clone the repository
 ```powershell
-git clone https://github.com/your-username/cyber-trust-ms.git
+git clone https://github.com/rahel-webdeveloper/cybertrust-ms.git
 cd cybertrust-ms
 ```
 2. Install dependencies
