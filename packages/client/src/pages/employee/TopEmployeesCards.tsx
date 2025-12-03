@@ -1,11 +1,11 @@
 import TopEmployeeCard from '@/components/TopEmployeeCard';
+import { useAuth } from '@/context/AuthContext';
 import { useTopEmployee } from '@/queries/employees';
 import { Box, Heading, Spinner, Stack } from '@chakra-ui/react';
 
 export type TopEmployeeType = {
   department: string;
   email: string;
-  employeeId: string;
   hireDate: string;
   name: string;
   phone: string;
@@ -19,7 +19,13 @@ export type TopEmployeeType = {
 };
 
 const TopEmployeesCardsDiv = () => {
-  const { data: topEmployeeData, isLoading, isRefetching } = useTopEmployee();
+  const {
+    data: topEmployeeData,
+    isLoading,
+    isRefetching,
+    refetch,
+  } = useTopEmployee();
+  const { user } = useAuth();
 
   if (isLoading || isRefetching) return <Spinner size={'lg'} />;
 
@@ -37,7 +43,12 @@ const TopEmployeesCardsDiv = () => {
         gridTemplateColumns={{ md: '1fr 1fr ', lg: '1fr 1fr 1fr' }}
       >
         {topEmployeeData.data.map((employee: TopEmployeeType, idx: number) => (
-          <TopEmployeeCard key={idx} employee={employee} />
+          <TopEmployeeCard
+            logedUser={user}
+            refetch={refetch}
+            key={idx}
+            employee={employee}
+          />
         ))}
       </Stack>
     </Box>

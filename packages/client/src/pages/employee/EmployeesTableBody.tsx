@@ -1,6 +1,7 @@
 import EmployeesTableSkeleton from '@/components/EmployeesTableSkeleton';
 import RoleMenu from '@/components/RoleMenu';
-import { useEmployee } from '@/queries/employees';
+import { useAuth } from '@/context/AuthContext';
+import { useUser } from '@/queries/users';
 import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Avatar, Badge, Checkbox, Table, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
@@ -8,8 +9,8 @@ import { useEffect } from 'react';
 const EmployeesTableBody = () => {
   const selection = useTableSelectionStore((state) => state.selectedUsers);
   const toggleItem = useTableSelectionStore((state) => state.toggleItem);
-  const setItems = useTableSelectionStore((state) => state.setEmployees);
-  const items = useTableSelectionStore((state) => state.employees);
+  const setItems = useTableSelectionStore((state) => state.setUsers);
+  const users = useTableSelectionStore((state) => state.employees);
 
   const {
     data: employeesData,
@@ -17,7 +18,8 @@ const EmployeesTableBody = () => {
     isLoading,
     refetch,
     error,
-  } = useEmployee();
+  } = useUser();
+  const { user: loginUser } = useAuth();
 
   useEffect(() => {
     if (employeesData?.data) setItems(employeesData.data);
@@ -34,18 +36,18 @@ const EmployeesTableBody = () => {
 
   return (
     <Table.Body>
-      {items.map((item, idx: number) => (
+      {users.map((user, idx: number) => (
         <Table.Row
           key={idx}
-          data-selected={selection.includes(item.user.email) ? '' : undefined}
+          data-selected={selection.includes(user.email) ? '' : undefined}
         >
           <Table.Cell>
             <Checkbox.Root
               size="sm"
               mt="0.5"
               aria-label="Select row"
-              checked={selection.includes(item.user.email)}
-              onCheckedChange={() => toggleItem(item.user.email)}
+              checked={selection.includes(user.email)}
+              onCheckedChange={() => toggleItem(user.email)}
             >
               <Checkbox.HiddenInput />
               <Checkbox.Control />
@@ -53,43 +55,79 @@ const EmployeesTableBody = () => {
           </Table.Cell>
           <Table.Cell display="flex" gap="3">
             <Avatar.Root shape="full" size="xs" cursor="pointer">
-              <Avatar.Fallback fontSize="xs" name={item.user.name} />
-              <Avatar.Image src={item.user.profile.avatarUrl} />
+              <Avatar.Fallback fontSize="xs" name={user.name} />
+              <Avatar.Image src={user.avatarUrl} />
             </Avatar.Root>
-            {item.user.name}
+            {user.name}
           </Table.Cell>
-          <Table.Cell>{item.department}</Table.Cell>
+          <Table.Cell>{user.department}</Table.Cell>
           <Table.Cell>
-            <RoleMenu
-              refetch={refetch}
-              userRole={item.user.role}
-              userId={item.user._id}
-            >
+            {loginUser?.role === 'admin' ? (
+              <RoleMenu
+                refetch={refetch}
+                userRole={user.role}
+                userId={user._id}
+              >
+                <Badge
+                  rounded="full"
+                  variant="solid"
+                  cursor="pointer"
+                  colorPalette={
+                    user.role === 'admin'
+                      ? 'red'
+                      : user.role === 'manager'
+                      ? 'yellow'
+                      : 'blue'
+                  }
+                  bgColor={
+                    user.role === 'admin'
+                      ? 'red.500'
+                      : user.role === 'manager'
+                      ? 'yellow.300'
+                      : 'blue.500'
+                  }
+                >
+                  {user.role}
+                </Badge>
+              </RoleMenu>
+            ) : (
               <Badge
                 rounded="full"
-                variant="subtle"
-                colorPalette={item.user.role === 'manager' ? 'teal' : 'yellow'}
+                variant="solid"
+                colorPalette={
+                  user.role === 'admin'
+                    ? 'red'
+                    : user.role === 'manager'
+                    ? 'yellow'
+                    : 'blue'
+                }
+                bgColor={
+                  user.role === 'admin'
+                    ? 'red.500'
+                    : user.role === 'manager'
+                    ? 'yellow.300'
+                    : 'blue.500'
+                }
               >
-                {item.user.role}
+                {user.role}
               </Badge>
-            </RoleMenu>
+            )}
           </Table.Cell>
-          <Table.Cell>{item.user.email}</Table.Cell>
-          <Table.Cell>
-            {item.user.profile.country ?? 'Not Specified'}
-          </Table.Cell>
+          <Table.Cell>{user.email}</Table.Cell>
+          <Table.Cell>{user.country ?? 'Not Specified'}</Table.Cell>
           <Table.Cell>
             <Badge
               rounded="full"
               variant="subtle"
-              colorPalette={item.user.status === 'active' ? 'green' : 'border'}
+              color="black"
+              bgColor={user.status === 'active' ? 'green.400' : 'border'}
             >
-              {item.user.status}
+              {user.status}
             </Badge>
           </Table.Cell>
-          <Table.Cell>${item.salary}</Table.Cell>
+          <Table.Cell>${user.salary}</Table.Cell>
           <Table.Cell>
-            {new Date(item.hireDate).toLocaleDateString()}
+            {new Date(user.hireDate).toLocaleDateString()}
           </Table.Cell>
         </Table.Row>
       ))}

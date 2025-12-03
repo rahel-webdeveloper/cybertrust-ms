@@ -18,7 +18,38 @@ type AddUserData = {
 export const userController = {
   async getUsersList(req: Request, res: Response, next: NextFunction) {
     try {
-      const users = await User.find();
+      const users = await User.aggregate([
+        {
+          $lookup: {
+            from: 'employees',
+            localField: '_id',
+            foreignField: 'user',
+            as: 'employee',
+          },
+        },
+        {
+          $unwind: {
+            path: '$employee',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            _id: '$_id',
+            name: '$name',
+            email: '$email',
+            role: '$role',
+            status: '$status',
+            phone: '$profile.phone',
+            country: '$profile.country',
+            avatarUrl: '$profile.avatarUrl',
+            position: '$employee.position',
+            department: '$employee.department',
+            hireDate: '$employee.hireDate',
+            salary: '$employee.salary',
+          },
+        },
+      ]);
 
       res.status(200).json({ success: true, data: users });
     } catch (err) {

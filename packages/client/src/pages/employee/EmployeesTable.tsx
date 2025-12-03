@@ -29,7 +29,7 @@ const EmployeesTable = () => {
           </Button>
         </Link>
         <Text fontWeight={'semibold'}>
-          Total Employees/Admin
+          Total Employees & Admins
           <Badge rounded="full" variant="subtle" size={'lg'} ml={'2'}>
             {items.length}
           </Badge>

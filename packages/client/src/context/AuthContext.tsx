@@ -2,10 +2,10 @@
 import React, { useCallback, useContext } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import API from '@/api/axios-Instance';
-import type { User } from '@/queries/employees';
+import type { UserProfile } from '@/types/types';
 
 type AuthContextType = {
-  user: User | null | undefined;
+  user: UserProfile | null | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -16,7 +16,7 @@ export const AuthContext = React.createContext<AuthContextType>(
   {} as AuthContextType
 );
 
-const fetchUser = async (): Promise<User> =>
+const fetchUser = async (): Promise<UserProfile> =>
   API.get('api/auth/me').then((res) => res.data);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isLoading,
     isError,
     error,
-  } = useQuery<User, Error>({
+  } = useQuery<UserProfile, Error>({
     queryKey: ['user'],
     queryFn: () => fetchUser(),
     enabled: !!localStorage.getItem('ct-token'),

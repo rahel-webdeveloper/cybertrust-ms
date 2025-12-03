@@ -2,7 +2,7 @@ import API from '@/api/axios-Instance';
 import { toaster } from '@/components/ui/toaster';
 import type { SignupFormData } from '@/pages/auth/SignupForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { User } from './employees';
+import type { UserProfile } from './employees';
 
 export type AuthAPIErrorType = {
   message: string;
@@ -11,7 +11,7 @@ export type AuthAPIErrorType = {
 
 type SignupResponseType = {
   token: string;
-  user: User;
+  user: UserProfile;
 };
 
 export const useSignup = () => {

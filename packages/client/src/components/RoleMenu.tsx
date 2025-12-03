@@ -2,7 +2,7 @@
 import { useUserRole } from '@/queries/users';
 import { Icon, Menu, Portal } from '@chakra-ui/react';
 import { Ellipsis } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { toaster } from './ui/toaster';
 import type { QueryObserverResult } from '@tanstack/react-query';
 
@@ -15,17 +15,14 @@ const items = [
 type RoleMenuProps = {
   userRole: string;
   userId: string;
-  children: ReactNode;
+  children?: ReactNode;
   refetch: () => Promise<QueryObserverResult<any, Error>>;
 };
 
 const RoleMenu = ({ userRole, userId, children, refetch }: RoleMenuProps) => {
   const { mutate } = useUserRole();
-  const [role, setRole] = useState(userRole);
 
   const handleRole = (e: any) => {
-    setRole(e.value);
-
     mutate(
       { newRole: e.value, id: userId },
       {
@@ -69,7 +66,7 @@ const RoleMenu = ({ userRole, userId, children, refetch }: RoleMenuProps) => {
             rounded={'2xl'}
             bgColor={'transparent'}
           >
-            <Menu.RadioItemGroup value={role} onValueChange={handleRole}>
+            <Menu.RadioItemGroup value={userRole} onValueChange={handleRole}>
               {items.map((item) => (
                 <Menu.RadioItem
                   key={item.value}

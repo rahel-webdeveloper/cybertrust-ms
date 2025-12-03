@@ -1,14 +1,14 @@
-import { useEmployee } from '@/queries/employees';
 import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Icon, HStack, IconButton, Flex } from '@chakra-ui/react';
 import { Filter, RefreshCcw, SortAsc } from 'lucide-react';
 import DialogAddUser from './DialogAddUser';
 import { useAuth } from '@/context/AuthContext';
 import DeleteUserConfirmDialog from './DeleteUserConfirmDialog';
+import { useUser } from '@/queries/users';
 
 const EmployeesTableActionBar = () => {
   const selectedUsers = useTableSelectionStore((state) => state.selectedUsers);
-  const { refetch } = useEmployee();
+  const { refetch } = useUser();
   const { user } = useAuth();
 
   return (

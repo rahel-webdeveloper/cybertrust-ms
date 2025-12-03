@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { TopEmployeeType } from '@/pages/employee/TopEmployeesCards';
 import {
   Avatar,
@@ -12,8 +13,9 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Mail, PhoneCall } from 'lucide-react';
+import { Ellipsis, Mail, PhoneCall } from 'lucide-react';
 import RoleMenu from './RoleMenu';
+import type { QueryObserverResult } from '@tanstack/react-query';
 
 const taskCountColor = (count: number) => {
   if (count >= 6) return 'green.300';
@@ -25,9 +27,17 @@ const taskCountColor = (count: number) => {
 
 interface TopEmployeeCardProps {
   employee: TopEmployeeType;
+  refetch: () => Promise<QueryObserverResult<any, Error>>;
+  logedUser: {
+    role: string;
+  };
 }
 
-const TopEmployeeCard = ({ employee }: TopEmployeeCardProps) => {
+const TopEmployeeCard = ({
+  employee,
+  refetch,
+  logedUser,
+}: TopEmployeeCardProps) => {
   return (
     <Card.Root width="325px" rounded={'2xl'}>
       <Card.Body p={'3'}>
@@ -52,7 +62,20 @@ const TopEmployeeCard = ({ employee }: TopEmployeeCardProps) => {
             justify={'space-between'}
             textAlign={'end'}
           >
-            <RoleMenu userId={employee.userId} userRole={employee.role} />
+            {logedUser.role === 'admin' ? (
+              <RoleMenu
+                userId={employee.userId}
+                userRole={employee.role}
+                refetch={refetch}
+              />
+            ) : (
+              <Icon
+                cursor={'pointer'}
+                as={Ellipsis}
+                alignSelf={'start'}
+                ml="auto"
+              />
+            )}
             <VStack align={'end'} gap={'0.5'}>
               <Badge
                 rounded={'full'}

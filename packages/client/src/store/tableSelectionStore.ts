@@ -1,10 +1,10 @@
 // @/store/useTableSelectionStore.ts
-import type { EmployeeDataResponse } from '@/queries/employees';
+import type { UserData } from '@/types/types';
 import { create } from 'zustand';
 
 interface SelectionState {
-  employees: EmployeeDataResponse[];
-  setEmployees: (items: EmployeeDataResponse[]) => void;
+  employees: UserData[];
+  setUsers: (items: UserData[]) => void;
   selectedUsers: string[];
   toggleAll: (checked: boolean) => void;
   toggleItem: (id: string) => void;
@@ -13,14 +13,14 @@ interface SelectionState {
 export const useTableSelectionStore = create<SelectionState>((set, get) => ({
   employees: [],
   selectedUsers: [],
-  setEmployees: (newItems: EmployeeDataResponse[]) =>
+  setUsers: (newItems: UserData[]) =>
     set({
       employees: newItems,
       selectedUsers: [],
     }),
   toggleAll: (checked) => {
     const { employees: items } = get();
-    set({ selectedUsers: checked ? items.map((item) => item.user.email) : [] });
+    set({ selectedUsers: checked ? items.map((item) => item.email) : [] });
   },
   toggleItem: (id) => {
     const { selectedUsers: selection } = get();

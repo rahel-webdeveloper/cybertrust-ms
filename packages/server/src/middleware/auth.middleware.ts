@@ -8,7 +8,7 @@ export interface AuthRequest extends Request {
     role?: string;
     name?: string;
     email?: string;
-    avatarUrl?: string;
+    avatarUrl?: string | null;
   };
 }
 

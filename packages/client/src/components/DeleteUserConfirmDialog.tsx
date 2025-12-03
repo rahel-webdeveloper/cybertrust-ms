@@ -4,6 +4,7 @@ import { Button, CloseButton, Dialog, Icon, Portal } from '@chakra-ui/react';
 import { Minus } from 'lucide-react';
 import { useState } from 'react';
 import { toaster } from './ui/toaster';
+import { useAuth } from '@/context/AuthContext';
 
 const DeleteUserConfirmDialog = ({
   isUserSelected,
@@ -13,6 +14,7 @@ const DeleteUserConfirmDialog = ({
   const [open, setOpen] = useState(false);
   const selectedUsers = useTableSelectionStore((state) => state.selectedUsers);
   const { mutate } = useDeleteUser();
+  const { user } = useAuth();
 
   const deleteUser = () => {
     const email = selectedUsers[0];
@@ -23,6 +25,16 @@ const DeleteUserConfirmDialog = ({
         type: 'error',
         title: 'Delete Faild',
         description: `Please select only one use and delete it.`,
+      });
+      return;
+    }
+
+    if (email === user?.email) {
+      toaster.create({
+        closable: true,
+        type: 'error',
+        title: 'Delete Faild',
+        description: `You can not delete your account from here, click on settings`,
       });
       return;
     }
