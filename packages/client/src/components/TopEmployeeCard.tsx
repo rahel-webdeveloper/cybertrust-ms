@@ -16,6 +16,7 @@ import {
 import { Ellipsis, Mail, PhoneCall } from 'lucide-react';
 import RoleMenu from './RoleMenu';
 import type { QueryObserverResult } from '@tanstack/react-query';
+import type { UserProfile } from '@/types/types';
 
 const taskCountColor = (count: number) => {
   if (count >= 6) return 'green.300';
@@ -28,9 +29,7 @@ const taskCountColor = (count: number) => {
 interface TopEmployeeCardProps {
   employee: TopEmployeeType;
   refetch: () => Promise<QueryObserverResult<any, Error>>;
-  logedUser: {
-    role: string;
-  };
+  logedUser: UserProfile | null | undefined;
 }
 
 const TopEmployeeCard = ({
@@ -62,7 +61,7 @@ const TopEmployeeCard = ({
             justify={'space-between'}
             textAlign={'end'}
           >
-            {logedUser.role === 'admin' ? (
+            {logedUser?.role === 'admin' ? (
               <RoleMenu
                 userId={employee.userId}
                 userRole={employee.role}
