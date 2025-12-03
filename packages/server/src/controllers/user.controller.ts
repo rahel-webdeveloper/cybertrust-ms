@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker';
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import User from '../models/user.model';
 import Employee from '../models/employee.model';
 import Task from '../models/task.model';
 import Project from '../models/project.model';
+import { selectPassword } from '../scripts/select-password';
 
 type AddUserData = {
   name: string;
@@ -14,14 +15,17 @@ type AddUserData = {
   position?: string | undefined;
 };
 
-const selectPassword = (role: string) => {
-  if (role === 'admin') return Bun.env.ADMIN_PW;
-  else if (role === 'manager') return 'manager123';
-  else if (role === 'developer') return 'developer';
-  else return 'There is no role specified to set password';
-};
-
 export const userController = {
+  async getUsersList(req: Request, res: Response, next: NextFunction) {
+    try {
+      const users = await User.find();
+
+      res.status(200).json({ success: true, data: users });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   async addNewUser(req: Request, res: Response) {
     try {
       const userData: AddUserData = req.body;
@@ -131,6 +135,30 @@ export const userController = {
         .status(500)
         .json({ success: false, message: 'Server error', error: err });
       console.log(err);
+    }
+  },
+
+  async changeUserRole(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userRole } = req.body;
+
+      if (!userRole) {
+        res.status(400).json({ success: false, message: 'User Role is empty' });
+        return;
+      }
+
+      const user = await User.findById(req.params.id);
+
+      if (!user) {
+        res.status(404).json({ success: false, message: 'Employee not found' });
+        return;
+      }
+
+      await user.updateOne({ role: userRole });
+
+      res.status(200).json({ success: true, data: user });
+    } catch (err) {
+      next(err);
     }
   },
 };

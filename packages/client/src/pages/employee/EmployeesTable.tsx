@@ -14,7 +14,7 @@ import EmployeesTableBody from './EmployeesTableBody';
 import EmployeesTableActionBar from '@/components/TableActionBar';
 
 const EmployeesTable = () => {
-  const items = useTableSelectionStore((state) => state.items);
+  const items = useTableSelectionStore((state) => state.employees);
   const selection = useTableSelectionStore((state) => state.selectedUsers);
   const toggleAll = useTableSelectionStore((state) => state.toggleAll);
   const indeterminate = selection.length > 0 && selection.length < items.length;

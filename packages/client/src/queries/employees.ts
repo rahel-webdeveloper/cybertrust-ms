@@ -24,13 +24,13 @@ export type Employee = {
 };
 
 export interface EmployeeDataResponse {
-  id: string;
+  _id: string;
   department: string;
   position: string;
   salary: number;
   hireDate: Date;
   user: {
-    id: string;
+    _id: string;
     name: string;
     email: string;
     role: string;

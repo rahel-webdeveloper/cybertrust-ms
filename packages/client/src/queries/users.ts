@@ -1,6 +1,6 @@
 import API from '@/api/axios-Instance';
 import type { AddUserFormData } from '@/components/AddUserForm';
-import { fetchUsers } from '@/services/userSevice';
+import { changeUserRole, fetchUsers } from '@/services/userSevice';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useUser = () => {
@@ -22,5 +22,12 @@ export const useDeleteUser = () => {
     mutationKey: ['users'],
     mutationFn: (userEmail: string) =>
       API.delete(`/api/users/${userEmail}`).then((res) => res.data),
+  });
+};
+
+export const useUserRole = () => {
+  return useMutation({
+    mutationKey: ['users'],
+    mutationFn: changeUserRole,
   });
 };

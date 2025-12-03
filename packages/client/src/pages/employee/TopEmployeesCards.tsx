@@ -14,6 +14,8 @@ export type TopEmployeeType = {
   role: string;
   salary: number;
   taskCount: number;
+  userId: string;
+  employeeId: string;
 };
 
 const TopEmployeesCardsDiv = () => {

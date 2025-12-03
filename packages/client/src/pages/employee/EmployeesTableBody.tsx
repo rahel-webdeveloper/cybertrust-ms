@@ -1,4 +1,5 @@
 import EmployeesTableSkeleton from '@/components/EmployeesTableSkeleton';
+import RoleMenu from '@/components/RoleMenu';
 import { useEmployee } from '@/queries/employees';
 import { useTableSelectionStore } from '@/store/tableSelectionStore';
 import { Avatar, Badge, Checkbox, Table, Text } from '@chakra-ui/react';
@@ -7,10 +8,16 @@ import { useEffect } from 'react';
 const EmployeesTableBody = () => {
   const selection = useTableSelectionStore((state) => state.selectedUsers);
   const toggleItem = useTableSelectionStore((state) => state.toggleItem);
-  const setItems = useTableSelectionStore((state) => state.setItems);
-  const items = useTableSelectionStore((state) => state.items);
+  const setItems = useTableSelectionStore((state) => state.setEmployees);
+  const items = useTableSelectionStore((state) => state.employees);
 
-  const { data: employeesData, isRefetching, isLoading, error } = useEmployee();
+  const {
+    data: employeesData,
+    isRefetching,
+    isLoading,
+    refetch,
+    error,
+  } = useEmployee();
 
   useEffect(() => {
     if (employeesData?.data) setItems(employeesData.data);
@@ -53,13 +60,19 @@ const EmployeesTableBody = () => {
           </Table.Cell>
           <Table.Cell>{item.department}</Table.Cell>
           <Table.Cell>
-            <Badge
-              rounded="full"
-              variant="subtle"
-              colorPalette={item.user.role === 'manager' ? 'teal' : 'yellow'}
+            <RoleMenu
+              refetch={refetch}
+              userRole={item.user.role}
+              userId={item.user._id}
             >
-              {item.user.role}
-            </Badge>
+              <Badge
+                rounded="full"
+                variant="subtle"
+                colorPalette={item.user.role === 'manager' ? 'teal' : 'yellow'}
+              >
+                {item.user.role}
+              </Badge>
+            </RoleMenu>
           </Table.Cell>
           <Table.Cell>{item.user.email}</Table.Cell>
           <Table.Cell>

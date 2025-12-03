@@ -5,12 +5,7 @@ import Task from '../models/task.model';
 export const employeesController = {
   async listEmployees(req: Request, res: Response, next: NextFunction) {
     try {
-      const employees = await Employee.find()
-        .populate(
-          'user',
-          'name email role status profile.avatarUrl profile.phone profile.country'
-        )
-        .lean();
+      const employees = await Employee.find().populate('user').lean();
 
       res.json({ success: true, data: employees });
     } catch (err) {
@@ -80,6 +75,7 @@ export const employeesController = {
             hireDate: '$employee.hireDate',
             taskCount: 1,
 
+            userId: '$user._id',
             name: '$user.name',
             email: '$user.email',
             avatarUrl: '$user.profile.avatarUrl',

@@ -4,11 +4,7 @@ import { userController } from '../controllers/user.controller';
 
 const userRoutes = Router();
 
-userRoutes.get('/', async (req: Request, res: Response) => {
-  const users = await User.find();
-
-  res.send({ success: true, data: users });
-});
+userRoutes.get('/', userController.getUsersList);
 
 userRoutes.get('/:id', (req: Request, res: Response) => {
   res.send(`Get user with ID ${req.params.id}`);
@@ -21,5 +17,7 @@ userRoutes.put('/:id', (req: Request, res: Response) => {
 });
 
 userRoutes.delete('/:userEmail', userController.deleteUser);
+
+userRoutes.put('/change-role/:id', userController.changeUserRole);
 
 export default userRoutes;

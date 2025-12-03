@@ -12,7 +12,8 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Ellipsis, Mail, PhoneCall } from 'lucide-react';
+import { Mail, PhoneCall } from 'lucide-react';
+import RoleMenu from './RoleMenu';
 
 const taskCountColor = (count: number) => {
   if (count >= 6) return 'green.300';
@@ -51,18 +52,10 @@ const TopEmployeeCard = ({ employee }: TopEmployeeCardProps) => {
             justify={'space-between'}
             textAlign={'end'}
           >
-            <Icon
-              cursor={'pointer'}
-              as={Ellipsis}
-              alignSelf={'start'}
-              ml="auto"
-            >
-              menu
-            </Icon>
+            <RoleMenu userId={employee.userId} userRole={employee.role} />
             <VStack align={'end'} gap={'0.5'}>
               <Badge
                 rounded={'full'}
-                // colorPalette={'purple'}
                 color="gray.900"
                 bgColor={taskCountColor(employee.taskCount)}
                 variant={'subtle'}
