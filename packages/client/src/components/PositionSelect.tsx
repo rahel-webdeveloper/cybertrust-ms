@@ -21,7 +21,7 @@ const PositionSelect = ({ onPositionChange }) => {
       collection={positions}
       size="sm"
       defaultValue={['architect']}
-      onChange={(e) => onPositionChange(e.target.value)}
+      onValueChange={(e) => onPositionChange(e.value[0])}
     >
       <Select.HiddenSelect />
       <Select.Control>
